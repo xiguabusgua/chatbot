@@ -123,3 +123,14 @@
 - 重新构建命令：`cd android-app && npm run sync && cd android && ./gradlew assembleRelease`
 - Web 端回归套件保留在 `e2e/`（8 套检查脚本 + artifacts + report.md），
   APK 调试探针（apk-probe/apk-cdp/shots-settings）已清理。
+
+## 6. GitHub 内置更新（v45）
+
+- 更新源：`https://api.github.com/repos/xiguabusgua/chatbot/releases/latest`（仓库 public，无需 token）
+- 版本管理：tag 末尾数字解析为 versionCode，与本机比对；Release 资产中的 `.apk` 为安装包
+- 检查时机：启动后 4 秒静默检查（每 6 小时最多一次）+ 设置里手动「检查更新」
+- 下载安装：真实 HTTP 下载 → 校验包名/签名/版本 → 备份当前 APK → 系统安装器覆盖安装
+- 异常处理：网络失败/下载失败/包校验失败均保留旧版本并友好提示；安装前自动备份，设置页出现「回退到上一版本」
+- 仓库：https://github.com/xiguabusgua/chatbot ，基线 Release `v45` 已发布并上传 APK
+- 模拟器全链路实测：uptodate(45=45) → 发现 v46 → 下载 58%→100% → 校验通过 → 系统安装器 → 安装成功 → 回退入口出现
+- 注意：GitHub latest API 有约数十秒 CDN 缓存，刚发版可能短暂读到旧版本
