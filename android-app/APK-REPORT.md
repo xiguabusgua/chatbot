@@ -1,11 +1,12 @@
-# APK 打包交付报告（chatbot 0.1.1 / V44）
+# APK 打包交付报告（chatbot 0.1.1 / V47）
 
 - 执行时间：2026-11-17 12:39（北京时间）
 - 产物路径：`android-app/android/app/build/outputs/apk/release/app-release.apk`（约 5.0 MB）
 - 追加修复：状态栏/导航栏颜色与界面一致（v39）
-- 新增功能：**应用内检查更新**（v40 实现并全链路验证）
+- 新增功能：**应用内检查更新**（v40 实现并全链路验证，v45 GitHub Releases）
 - 启动行为：首次打开直接进入对话界面（v43）
-- 新增功能：**DSH 风格首次新手引导**（v44 最终交付版，见 1.4）
+- 新增功能：**DSH 风格首次新手引导**（v44，见 1.4）
+- 最新功能：**自定义聊天背景**（v47，见 1.5）：预设渐变 / 相册图片 + 拖动缩放调整显示区域 + 遮罩浓度，深浅色自适应
 
 ## 1. APK 基本信息
 
@@ -13,10 +14,25 @@
 |---|---|
 | 包名 | com.chatbot.demo |
 | 应用名 | chatbot |
-| versionCode / versionName | 44 / 0.1.1 |
+| versionCode / versionName | 47 / 0.1.1 |
 | minSdk / targetSdk | 23（Android 6.0+）/ 34（规避 Android 15 强制 edge-to-edge） |
 | 签名 | chatbot-release.jks（alias: chatbot） |
 | 编译 SDK | 35 |
+
+## 1.5 自定义聊天背景（v47）
+
+入口：设置 → 个性化 → Chat background。
+
+- **预设背景**：默认 / 极光 / 薄荷 / 暖阳 / 海盐 / 暖沙 6 款渐变，点选即时生效
+- **相册图片**：
+  - Android 13+ 走系统照片选择器（`ACTION_PICK_IMAGES`，无需存储权限，遵循"仅授权所选照片"）；低版本先申请 `READ_EXTERNAL_STORAGE` 再打开相册
+  - Web/浏览器端走 `<input type="file" accept="image/*">`
+  - 原生侧按最长边 1280 缩放、JPEG 0.72 压缩后以 base64 回调 H5，避免 OOM 与 localStorage 超限
+- **调整显示区域**：选图后进入全屏调整页，可拖动图片改位置、滑块缩放 100%–300%，带点阵辅助线；满意后"应用"，"取消"不落盘
+- **遮罩浓度**：0%–90% 可调，深浅主题自动用白色/黑色遮罩（深色模式不影响浅色文字可读性）
+- **稳定与适配**：背景注入 `.frame-_9fdf5`（输入区自带底色不受影响）；`background-size/position` 用百分比做多尺寸适配；图片仅存本机 localStorage
+- **异常处理**：取消选择、权限拒绝、图片读取/解码失败均有明确提示；`posX/posY/scale/opacity` 读取时做范围钳制
+- 实测：Web 专项 19/19；模拟器走完「相册选图→调整页→缩放 145%+拖动→应用→对话页背景生效→冷启动保留」
 
 ## 1.4 DSH 风格首次新手引导（v44）
 

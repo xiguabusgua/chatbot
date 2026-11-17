@@ -1509,3 +1509,161 @@ body[data-sk-bubble="sand"] #sk-ob { --ob-accent: #b07d54; }
   word-break: break-word;
   text-align: left;
 }
+
+/* ==================== 自定义聊天背景 ==================== */
+/* 注入到应用聊天主容器：遮罩层在上、背景层在下。深浅主题用不同遮罩色，保证文字可读 */
+body[data-sk-chatbg] { --sk-chatbg-veil-rgb: 255,255,255; }
+html[data-ds-dark-theme] body[data-sk-chatbg],
+body[data-ds-dark-theme][data-sk-chatbg],
+body.dark[data-sk-chatbg] { --sk-chatbg-veil-rgb: 0,0,0; }
+
+body[data-sk-chatbg] .frame-_9fdf5 {
+  background-image:
+    linear-gradient(rgba(var(--sk-chatbg-veil-rgb), var(--sk-chatbg-op, 0.35)), rgba(var(--sk-chatbg-veil-rgb), var(--sk-chatbg-op, 0.35))),
+    var(--sk-chatbg-img) !important;
+  background-size: cover, cover !important;
+  background-position: center, center !important;
+  background-repeat: no-repeat, no-repeat !important;
+}
+
+#sk-settings .sk-bg-hint {
+  margin: 4px 18px 12px;
+  color: var(--sk-label);
+  font-size: 12.5px;
+  line-height: 1.55;
+  opacity: 0.8;
+}
+
+#sk-settings .sk-bg-preview {
+  position: relative;
+  height: 132px;
+  margin: 2px 16px 16px;
+  padding: 14px;
+  border: 1px solid var(--sk-line, rgba(0,0,0,0.08));
+  border-radius: 14px;
+  background-color: var(--sk-card);
+  background-size: cover, cover;
+  background-position: center, center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+#sk-settings .sk-bg-demo-row { display: flex; justify-content: flex-end; }
+#sk-settings .sk-bg-demo-row.left { justify-content: flex-start; }
+#sk-settings .sk-bg-demo-bubble {
+  max-width: 70%;
+  padding: 7px 12px;
+  border-radius: 16px;
+  background: var(--sk-bubble-bg, #eef1ff);
+  color: var(--sk-text);
+  font-size: 13px;
+  line-height: 19px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+#sk-settings .sk-bg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 14px 16px;
+}
+
+#sk-settings .sk-bg-preset {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--sk-label);
+  cursor: pointer;
+}
+#sk-settings .sk-bg-preset.is-on { border-color: var(--sk-accent, #4d6bfe); }
+
+#sk-settings .sk-bg-swatch {
+  width: 100%;
+  height: 52px;
+  border-radius: 9px;
+  border: 1px solid rgba(0,0,0,0.06);
+  background-size: cover;
+  background-position: center;
+}
+
+#sk-settings .sk-bg-name { font-size: 12px; line-height: 16px; }
+
+#sk-settings .sk-bg-tick {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--sk-accent, #4d6bfe);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#sk-settings .sk-bg-tick svg { width: 12px; height: 12px; stroke-width: 2.4; }
+
+#sk-settings .sk-bg-actions {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+}
+
+#sk-settings .sk-bg-opacity { padding: 14px 16px 4px; }
+#sk-settings .sk-bg-opacity input[type="range"] {
+  width: 100%;
+  accent-color: var(--sk-accent, #4d6bfe);
+  cursor: pointer;
+}
+#sk-settings .sk-bg-opacity-hint {
+  padding: 2px 16px 14px;
+  color: var(--sk-label);
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* ==================== 聊天背景：调整显示区域 ==================== */
+#sk-settings .sk-adjust-page .sk-bg-hint { margin-bottom: 10px; }
+#sk-settings .sk-adjust-stage {
+  position: relative;
+  height: 62vh;
+  min-height: 380px;
+  margin: 2px 16px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--sk-line, rgba(0,0,0,0.08));
+  background-color: var(--sk-card);
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+}
+#sk-settings .sk-adjust-stage:active { cursor: grabbing; }
+#sk-settings .sk-adjust-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.85) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  background-position: center;
+  opacity: 0.35;
+}
+#sk-settings .sk-adjust-label {
+  display: block;
+  padding: 12px 16px 0;
+  color: var(--sk-label);
+  font-size: 13px;
+}
+#sk-settings .sk-adjust-page .sk-bg-actions { flex-wrap: wrap; }
+#sk-settings .sk-adjust-page .sk-bg-actions .sk-btn { flex: 1 1 44%; }

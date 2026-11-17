@@ -5,13 +5,20 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
+import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.getcapacitor.BridgeActivity;
@@ -47,8 +54,16 @@ public class MainActivity extends BridgeActivity {
         "https://api.github.com/repos/%s/releases/latest";
     private static final String BACKUP_NAME = "rollback-backup.apk";
 
+    // 相册选图：请求码与权限
+    private static final int REQ_PICK_IMAGE = 3001;
+    private static final int REQ_READ_STORAGE = 3002;
+    private static final int IMAGE_MAX_EDGE = 1280;
+
     private final AtomicReference<String> updateStatus =
         new AtomicReference<>("{\"phase\":\"idle\"}");
+
+    /** 相册回调 JS 函数名，由页面 pick() 时传入 */
+    private String galleryCallback = null;
 
     private void setStatus(String s) {
         updateStatus.set(s);
@@ -78,6 +93,142 @@ public class MainActivity extends BridgeActivity {
         WebView webView = getBridge() != null ? getBridge().getWebView() : null;
         if (webView != null) {
             webView.addJavascriptInterface(new Updater(), "NativeUpdater");
+            webView.addJavascriptInterface(new Gallery(), "NativeGallery");
+        }
+    }
+
+    /* ---------------- 相册选图 ---------------- */
+
+    /** 通知 H5 相册结果：{ok:true,data:<base64>} 或 {ok:false,reason:cancel|permission|error} */
+    private void galleryResult(final boolean ok, final String data, final String reason) {
+        if (galleryCallback == null || galleryCallback.trim().isEmpty()) return;
+        final String cb = galleryCallback;
+        galleryCallback = null;
+        runOnUiThread(() -> {
+            WebView wv = getBridge() != null ? getBridge().getWebView() : null;
+            if (wv == null) return;
+            StringBuilder sb = new StringBuilder("{");
+            sb.append("\"ok\":").append(ok ? "true" : "false");
+            if (ok) {
+                sb.append(",\"data\":").append(jsonString(data == null ? "" : data));
+            } else {
+                sb.append(",\"reason\":").append(jsonString(reason == null ? "error" : reason));
+            }
+            sb.append("}");
+            wv.evaluateJavascript("try{" + cb + "(" + sb + ")}catch(e){}", null);
+        });
+    }
+
+    private static String jsonString(String s) {
+        JSONObject o = new JSONObject();
+        try {
+            o.put("v", s == null ? "" : s);
+            String raw = o.toString();
+            return raw.substring(raw.indexOf(':') + 1, raw.length() - 1);
+        } catch (Exception e) {
+            return "\"\"";
+        }
+    }
+
+    private boolean hasStoragePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
+        }
+        return ContextCompat.checkSelfPermission(this,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestStoragePermission() {
+        String[] perms = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+            ? new String[]{android.Manifest.permission.READ_MEDIA_IMAGES}
+            : new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE};
+        ActivityCompat.requestPermissions(this, perms, REQ_READ_STORAGE);
+    }
+
+    private void openGallery() {
+        Intent intent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+ 系统照片选择器，无需存储权限
+            intent = new Intent(android.provider.MediaStore.ACTION_PICK_IMAGES);
+            intent.setType("image/*");
+        } else {
+            intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.setType("image/*");
+        }
+        try {
+            startActivityForResult(intent, REQ_PICK_IMAGE);
+        } catch (Exception e) {
+            galleryResult(false, null, "error");
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQ_READ_STORAGE) {
+            boolean granted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+            if (granted) openGallery();
+            else galleryResult(false, null, "permission");
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQ_PICK_IMAGE) return;
+        if (resultCode != RESULT_OK || data == null || data.getData() == null) {
+            galleryResult(false, null, "cancel");
+            return;
+        }
+        try {
+            Bitmap bmp = decodeScaled(data.getData());
+            if (bmp == null) {
+                galleryResult(false, null, "error");
+                return;
+            }
+            java.io.ByteArrayOutputStream bos = new java.io.ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 72, bos);
+            bmp.recycle();
+            String b64 = android.util.Base64.encodeToString(bos.toByteArray(), android.util.Base64.NO_WRAP);
+            galleryResult(true, b64, null);
+        } catch (Exception e) {
+            galleryResult(false, null, "error");
+        }
+    }
+
+    /** 按最大边缩放解码，防 OOM 并控制体积 */
+    private Bitmap decodeScaled(Uri uri) throws Exception {
+        BitmapFactory.Options bounds = new BitmapFactory.Options();
+        bounds.inJustDecodeBounds = true;
+        InputStream in = getContentResolver().openInputStream(uri);
+        if (in == null) return null;
+        BitmapFactory.decodeStream(in, null, bounds);
+        in.close();
+        if (bounds.outWidth <= 0 || bounds.outHeight <= 0) return null;
+        int sample = Math.max(1, Math.max(bounds.outWidth, bounds.outHeight) / IMAGE_MAX_EDGE);
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inSampleSize = sample;
+        opts.inPreferredConfig = Bitmap.Config.RGB_565;
+        InputStream in2 = getContentResolver().openInputStream(uri);
+        if (in2 == null) return null;
+        Bitmap bmp = BitmapFactory.decodeStream(in2, null, opts);
+        in2.close();
+        return bmp;
+    }
+
+    private class Gallery {
+        /** pick(callbackName)：拉起相册，结果回调 window[callbackName]({ok,...}) */
+        @JavascriptInterface
+        public void pick(final String callbackName) {
+            galleryCallback = callbackName;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                openGallery(); // 系统照片选择器无需权限
+            } else if (hasStoragePermission()) {
+                openGallery();
+            } else {
+                requestStoragePermission();
+            }
         }
     }
 

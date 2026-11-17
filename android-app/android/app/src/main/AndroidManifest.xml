@@ -41,4 +41,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 应用内更新：Android 8+ 安装下载的 APK 需要用户授予"安装未知应用"权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- 相册选图：Android 13+ 用系统照片选择器(无需权限)，低版本需读取外部存储 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 </manifest>

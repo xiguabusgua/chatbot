@@ -49,7 +49,8 @@
     link: '<path d="M10.2 13.8a3.6 3.6 0 005.1 0l3.1-3.1a3.6 3.6 0 00-5.1-5.1L11.9 7"/><path d="M13.8 10.2a3.6 3.6 0 00-5.1 0l-3.1 3.1a3.6 3.6 0 005.1 5.1L12.1 17"/>',
     palette: '<path d="M12 3.6a8.4 8.4 0 100 16.8c1.3 0 2.1-.9 2.1-2 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.2 0-1 .8-1.8 1.8-1.8h1.3a3.8 3.8 0 003.8-3.8c0-3.8-3.6-6.7-8-6.7z"/><circle cx="8.2" cy="10.2" r="0.95" fill="currentColor" stroke="none"/><circle cx="12" cy="7.8" r="0.95" fill="currentColor" stroke="none"/><circle cx="15.6" cy="10.2" r="0.95" fill="currentColor" stroke="none"/>',
     radius: '<rect x="4.6" y="4.6" width="14.8" height="14.8" rx="5.6"/><path d="M4.6 9.4h14.8"/>',
-    width: '<path d="M4 12h16"/><path d="M7.6 8.4L4 12l3.6 3.6"/><path d="M16.4 8.4L20 12l-3.6 3.6"/>'
+    width: '<path d="M4 12h16"/><path d="M7.6 8.4L4 12l3.6 3.6"/><path d="M16.4 8.4L20 12l-3.6 3.6"/>',
+    image: '<rect x="3.4" y="4.6" width="17.2" height="14.8" rx="2.4"/><circle cx="8.6" cy="9.6" r="1.6"/><path d="M4.2 17l4.6-4.4 3.4 3.2 2.8-2.6 5 4.6"/>'
   };
 
   function icon(name) {
@@ -157,6 +158,29 @@
       bubbleRadius: "气泡圆角",
       bubbleWidth: "气泡宽度",
       bubblePreview: "你好，这是一条示例消息",
+      chatBg: "聊天背景",
+      chatBgGroup: "聊天背景",
+      chatBgApplied: "背景已应用",
+      chatBgNone: "默认",
+      chatBgImage: "自定义图片",
+      chatBgOpacity: "遮罩浓度",
+      chatBgOpacityHint: "数值越高，背景越浅、文字越清晰",
+      chatBgPick: "选择图片",
+      chatBgClear: "清除图片",
+      chatBgHint: "选择一张图片作为聊天背景，可调节遮罩让文字更清晰。图片仅保存在本机。",
+      chatBgPreset: "预设背景",
+      chatBgUploadFail: "图片读取失败，请换一张试试",
+      chatBgTooLarge: "图片过大，已自动压缩",
+      chatBgAdjust: "调整背景",
+      chatBgAdjustHint: "拖动图片调整位置，用滑块缩放，满意后点“应用”。",
+      chatBgZoom: "缩放",
+      chatBgApply: "应用",
+      chatBgCancel: "取消",
+      chatBgReset: "重置",
+      chatBgNoImage: "请先选择一张图片",
+      chatBgLoading: "正在读取图片…",
+      chatBgCancelPick: "已取消选择",
+      chatBgPermission: "需要相册权限才能选择图片，请在系统设置中允许",
       cDefault: "默认",
       cMint: "薄荷",
       cLilac: "淡紫",
@@ -370,6 +394,29 @@
       bubbleRadius: "Bubble corners",
       bubbleWidth: "Bubble width",
       bubblePreview: "Hi, this is a sample message",
+      chatBg: "Chat background",
+      chatBgGroup: "Chat background",
+      chatBgApplied: "Background applied",
+      chatBgNone: "Default",
+      chatBgImage: "Custom image",
+      chatBgOpacity: "Overlay strength",
+      chatBgOpacityHint: "Higher value makes the background lighter and text clearer",
+      chatBgPick: "Choose image",
+      chatBgClear: "Clear image",
+      chatBgHint: "Pick an image as your chat background and adjust the overlay for clearer text. The image stays on this device.",
+      chatBgPreset: "Presets",
+      chatBgUploadFail: "Could not read the image, please try another",
+      chatBgTooLarge: "Image was too large and has been compressed",
+      chatBgAdjust: "Adjust background",
+      chatBgAdjustHint: "Drag to reposition, use the slider to zoom, then tap Apply.",
+      chatBgZoom: "Zoom",
+      chatBgApply: "Apply",
+      chatBgCancel: "Cancel",
+      chatBgReset: "Reset",
+      chatBgNoImage: "Please choose an image first",
+      chatBgLoading: "Loading image…",
+      chatBgCancelPick: "Selection cancelled",
+      chatBgPermission: "Photo library access is required. Please allow it in system settings",
       cDefault: "Default",
       cMint: "Mint",
       cLilac: "Lilac",
@@ -927,7 +974,7 @@
   /* ---------------- 新增：字号 / 个性化 / 关于页 ---------------- */
   var FS_STEPS = ["s", "m", "l", "xl"];
   var FS_LABEL = { s: "fsSmall", m: "fsNormal", l: "fsLarge", xl: "fsXL" };
-  var APP_VERSION = { version: "0.1.1", build: "V45" };
+  var APP_VERSION = { version: "0.1.1", build: "V47" };
 
   /* 应用内更新：manifest 清单地址（json: {versionName,versionCode,apkUrl,notes}）。
      部署到你的服务器后改这里；也可在设备上用 localStorage["chat-demo:update-url"] 覆盖 */
@@ -981,6 +1028,209 @@
     return { normal: t("wNormal"), wide: t("wWide") }[b.width];
   }
 
+  /* ---------------- 自定义聊天背景 ---------------- */
+  var BG_KEY = "chat-demo:chat-bg";
+  var BG_PRESETS = [
+    { k: "none", zh: "默认", en: "Default", css: "" },
+    { k: "aurora", zh: "极光", en: "Aurora", css: "linear-gradient(135deg,#e8f0fe 0%,#f3e8ff 50%,#fce7f3 100%)" },
+    { k: "mint", zh: "薄荷", en: "Mint", css: "linear-gradient(135deg,#e0f7ef 0%,#d4f0e4 50%,#e8f5e9 100%)" },
+    { k: "sunset", zh: "暖阳", en: "Sunset", css: "linear-gradient(135deg,#fff1e6 0%,#ffe0d1 50%,#ffe8ee 100%)" },
+    { k: "ocean", zh: "海盐", en: "Ocean", css: "linear-gradient(135deg,#e3f2fd 0%,#dcecfb 50%,#e0f7fa 100%)" },
+    { k: "sand", zh: "暖沙", en: "Sand", css: "linear-gradient(135deg,#f7efe2 0%,#f1e6d4 50%,#f5ece0 100%)" }
+  ];
+
+  function clampNum(v, min, max, fallback) {
+    var n = Number(v);
+    if (isNaN(n)) return fallback;
+    return Math.max(min, Math.min(max, n));
+  }
+
+  function readBg() {
+    var raw = read(BG_KEY, "{}");
+    var o = {};
+    try { o = JSON.parse(raw) || {}; } catch (e) {}
+    var type = o.type === "image" || o.type === "preset" ? o.type : "none";
+    var preset = BG_PRESETS.some(function (p) { return p.k === o.preset; }) ? o.preset : "aurora";
+    var op = clampNum(o.opacity, 0, 95, 35);
+    var posX = clampNum(o.posX, 0, 100, 50);
+    var posY = clampNum(o.posY, 0, 100, 50);
+    var scale = clampNum(o.scale, 1, 3, 1);
+    return {
+      type: type,
+      preset: preset,
+      image: typeof o.image === "string" ? o.image : "",
+      opacity: op,
+      posX: posX,
+      posY: posY,
+      scale: scale
+    };
+  }
+
+  function writeBg(bg) {
+    write(BG_KEY, JSON.stringify({
+      type: bg.type,
+      preset: bg.preset,
+      image: bg.type === "image" ? bg.image : "",
+      opacity: bg.opacity,
+      posX: bg.posX,
+      posY: bg.posY,
+      scale: bg.scale
+    }));
+  }
+
+  function bgLabel() {
+    var bg = readBg();
+    if (bg.type === "image") return t("chatBgImage");
+    if (bg.type === "preset") {
+      var p = BG_PRESETS.filter(function (x) { return x.k === bg.preset; })[0];
+      return p ? (isEN() ? p.en : p.zh) : t("chatBgNone");
+    }
+    return t("chatBgNone");
+  }
+
+  /* 把背景注入聊天主容器：遮罩层（保证文字可读）+ 背景层（渐变或图片）。
+     图片背景支持缩放(--sk-chatbg-size)与位置(--sk-chatbg-pos)，做不同屏幕适配。 */
+  function applyChatBg() {
+    var bg = readBg();
+    var body = document.body;
+    var frame = document.querySelector(".frame-_9fdf5");
+    var img = "";
+    var size = "cover";
+    var pos = "center center";
+    if (bg.type === "image" && bg.image) {
+      img = 'url("' + bg.image + '")';
+      size = Math.round(bg.scale * 100) + "%";
+      pos = bg.posX + "% " + bg.posY + "%";
+    } else if (bg.type === "preset") {
+      var p = BG_PRESETS.filter(function (x) { return x.k === bg.preset; })[0];
+      img = p ? p.css : "";
+    }
+    if (!img) {
+      body.removeAttribute("data-sk-chatbg");
+      if (frame) frame.removeAttribute("data-sk-chatbg");
+      return;
+    }
+    body.setAttribute("data-sk-chatbg", bg.type);
+    body.style.setProperty("--sk-chatbg-op", String(bg.opacity / 100));
+    body.style.setProperty("--sk-chatbg-img", img);
+    body.style.setProperty("--sk-chatbg-size", size);
+    body.style.setProperty("--sk-chatbg-pos", pos);
+    if (frame) frame.setAttribute("data-sk-chatbg", bg.type);
+  }
+
+  /* 压缩上传图片到最长边 1280、JPEG 0.72，避免超出 localStorage 配额 */
+  function compressImage(file) {
+    return new Promise(function (resolve, reject) {
+      var fr = new FileReader();
+      fr.onerror = function () { reject(new Error("read")); };
+      fr.onload = function () {
+        var dataUrl = String(fr.result || "");
+        var img = new Image();
+        img.onerror = function () { reject(new Error("decode")); };
+        img.onload = function () {
+          var max = 1280;
+          var w = img.width || 1;
+          var h = img.height || 1;
+          var scale = Math.min(1, max / Math.max(w, h));
+          var cw = Math.max(1, Math.round(w * scale));
+          var ch = Math.max(1, Math.round(h * scale));
+          var canvas = document.createElement("canvas");
+          canvas.width = cw;
+          canvas.height = ch;
+          var ctx2 = canvas.getContext("2d");
+          if (!ctx2) { resolve(dataUrl); return; }
+          ctx2.fillStyle = "#ffffff";
+          ctx2.fillRect(0, 0, cw, ch);
+          ctx2.drawImage(img, 0, 0, cw, ch);
+          try {
+            resolve(canvas.toDataURL("image/jpeg", 0.72));
+          } catch (e) {
+            resolve(dataUrl);
+          }
+        };
+        img.src = dataUrl;
+      };
+      fr.readAsDataURL(file);
+    });
+  }
+
+  /* 选图后进入“调整显示区域”预览页：草稿存 state.bgDraft，应用时才写入正式配置 */
+  function enterAdjust(dataUrl, compressed) {
+    if (!dataUrl) {
+      toast(t("chatBgUploadFail"));
+      return;
+    }
+    var cur = readBg();
+    state.bgDraft = {
+      image: dataUrl,
+      opacity: cur.type === "image" ? cur.opacity : 30,
+      posX: cur.type === "image" ? cur.posX : 50,
+      posY: cur.type === "image" ? cur.posY : 50,
+      scale: cur.type === "image" ? cur.scale : 1
+    };
+    backStack.push("chatbg");
+    view = "bg-adjust";
+    paint();
+    if (compressed) toast(t("chatBgTooLarge"));
+  }
+
+  function pickViaFile() {
+    var input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.style.display = "none";
+    document.body.appendChild(input);
+    var done = false;
+    function cleanup() {
+      if (done) return;
+      done = true;
+      if (input.parentNode) input.parentNode.removeChild(input);
+    }
+    input.addEventListener("change", function () {
+      var file = input.files && input.files[0];
+      if (!file) { cleanup(); return; }
+      toast(t("chatBgLoading"));
+      var big = file.size > 1500000;
+      compressImage(file)
+        .then(function (dataUrl) { enterAdjust(dataUrl, big); })
+        .catch(function () { toast(t("chatBgUploadFail")); })
+        .then(cleanup);
+    });
+    // 用户取消（切回应用但未选图）时清理临时节点
+    window.addEventListener("focus", cleanup, { once: true });
+    input.click();
+  }
+
+  function pickBackgroundImage() {
+    if (window.NativeGallery && typeof window.NativeGallery.pick === "function") {
+      var cbName = "__skGalleryCb" + Date.now();
+      toast(t("chatBgLoading"));
+      window[cbName] = function (res) {
+        try { delete window[cbName]; } catch (e) { window[cbName] = null; }
+        if (!res) { toast(t("chatBgUploadFail")); return; }
+        if (!res.ok) {
+          if (res.reason === "cancel") toast(t("chatBgCancelPick"));
+          else if (res.reason === "permission") toast(t("chatBgPermission"));
+          else toast(t("chatBgUploadFail"));
+          return;
+        }
+        // 原生已压缩，直接拼 data URL
+        var dataUrl = "data:image/jpeg;base64," + res.data;
+        var img = new Image();
+        img.onload = function () { enterAdjust(dataUrl, false); };
+        img.onerror = function () { toast(t("chatBgUploadFail")); };
+        img.src = dataUrl;
+      };
+      try {
+        window.NativeGallery.pick(cbName);
+      } catch (e) {
+        delete window[cbName];
+        pickViaFile();
+      }
+      return;
+    }
+    pickViaFile();
+  }
 
   /* ---------------- 右侧上下文边栏 ---------------- */
   var ctxState = null;
@@ -1692,6 +1942,7 @@
     else document.body.setAttribute("data-sk-radius", bub.radius);
     if (bub.width === "normal") document.body.removeAttribute("data-sk-width");
     else document.body.setAttribute("data-sk-width", bub.width);
+    applyChatBg();
   }
 
   function toggleRow(act, labelLabel, hint, on) {
@@ -1735,6 +1986,116 @@
       row("bubble-radius", "radius", t("bubbleRadius"), bubbleLabel("radius")) +
       row("bubble-width", "width", t("bubbleWidth"), bubbleLabel("width")) +
       "</section>" +
+      '<div class="sk-group">' +
+      t("chatBgGroup") +
+      "</div>" +
+      '<section class="sk-card">' +
+      row("chatbg", "image", t("chatBg"), bgLabel()) +
+      "</section>" +
+      "</div>"
+    );
+  }
+
+  function chatBgHtml() {
+    var bg = readBg();
+    var presets = BG_PRESETS.map(function (p) {
+      var on = bg.type === "preset" && bg.preset === p.k;
+      var swatch = p.k === "none" ? "var(--sk-card)" : p.css;
+      return (
+        '<button type="button" class="sk-bg-preset' + (on ? " is-on" : "") +
+        '" data-act="bg-preset" data-preset="' + p.k + '" aria-label="' +
+        (isEN() ? p.en : p.zh) + '">' +
+        '<span class="sk-bg-swatch" style="background:' + swatch + '"></span>' +
+        '<span class="sk-bg-name">' + (isEN() ? p.en : p.zh) + "</span>" +
+        (on ? '<span class="sk-bg-tick">' + icon("tick") + "</span>" : "") +
+        "</button>"
+      );
+    }).join("");
+
+    var imageOn = bg.type === "image" && bg.image;
+    var previewStyle = "";
+    if (imageOn) {
+      previewStyle = "background-image:" + veilCss(bg.opacity) + ",url('" + bg.image + "')" +
+        ";background-size:cover," + Math.round(bg.scale * 100) + "%" +
+        ";background-position:center," + bg.posX + "% " + bg.posY + "%";
+    } else if (bg.type === "preset") {
+      var p = BG_PRESETS.filter(function (x) { return x.k === bg.preset; })[0];
+      if (p) previewStyle = "background-image:" + veilCss(bg.opacity) + "," + p.css;
+    }
+
+    return (
+      '<div class="sk-page">' +
+      header(t("chatBg"), "back") +
+      '<div class="sk-bg-hint">' + t("chatBgHint") + "</div>" +
+      '<div class="sk-bg-preview" style="' + previewStyle + '">' +
+      '<div class="sk-bg-demo-row"><span class="sk-bg-demo-bubble">Hi</span></div>' +
+      '<div class="sk-bg-demo-row left"><span class="sk-bg-demo-bubble">' +
+      t("bubblePreview") + "</span></div>" +
+      "</div>" +
+      '<div class="sk-group">' + t("chatBgPreset") + "</div>" +
+      '<section class="sk-card"><div class="sk-bg-grid">' + presets + "</div></section>" +
+      '<div class="sk-group">' + t("chatBgImage") + "</div>" +
+      '<section class="sk-card">' +
+      '<div class="sk-bg-actions">' +
+      '<button type="button" class="sk-btn primary" data-act="bg-pick">' + t("chatBgPick") + "</button>" +
+      (imageOn ? '<button type="button" class="sk-btn" data-act="bg-adjust">' + t("chatBgAdjust") + "</button>" : "") +
+      (imageOn ? '<button type="button" class="sk-btn" data-act="bg-clear">' + t("chatBgClear") + "</button>" : "") +
+      "</div>" +
+      "</section>" +
+      '<div class="sk-group">' + t("chatBgOpacity") + "</div>" +
+      '<section class="sk-card">' +
+      '<div class="sk-bg-opacity"><input type="range" min="0" max="90" step="5" value="' +
+      bg.opacity + '" data-act="bg-opacity" aria-label="' + t("chatBgOpacity") + '"></div>' +
+      '<div class="sk-bg-opacity-hint">' + t("chatBgOpacityHint") + "</div>" +
+      "</section>" +
+      "</div>"
+    );
+  }
+
+  function veilCss(opacity) {
+    return "linear-gradient(rgba(255,255,255," + (opacity / 100) + "),rgba(255,255,255," + (opacity / 100) + "))";
+  }
+
+  function bgImageCss(bg) {
+    var veil = veilCss(bg.opacity);
+    if (bg.type === "image" && bg.image) return veil + ',url("' + bg.image + '")';
+    if (bg.type === "preset") {
+      var p = BG_PRESETS.filter(function (x) { return x.k === bg.preset; })[0];
+      if (p) return veil + "," + p.css;
+    }
+    return "";
+  }
+
+  /* 调整显示区域：可拖动 / 缩放的实时预览。数据来自 state.bgDraft，应用时才落盘 */
+  function adjustPreviewCss(d) {
+    return "background-image:" + veilCss(d.opacity) + ",url('" + d.image + "')" +
+      ";background-size:cover," + Math.round(d.scale * 100) + "%" +
+      ";background-position:center," + d.posX + "% " + d.posY + "%";
+  }
+
+  function adjustBgHtml() {
+    var d = state.bgDraft;
+    if (!d || !d.image) {
+      return '<div class="sk-page">' + header(t("chatBgAdjust"), "back") +
+        '<div class="sk-bg-hint">' + t("chatBgNoImage") + "</div></div>";
+    }
+    return (
+      '<div class="sk-page sk-adjust-page">' +
+      header(t("chatBgAdjust"), "bg-adjust-cancel") +
+      '<div class="sk-bg-hint">' + t("chatBgAdjustHint") + "</div>" +
+      '<div class="sk-adjust-stage" id="sk-adjust-stage" style="' + adjustPreviewCss(d) + '">' +
+      '<div class="sk-adjust-dots" aria-hidden="true"></div>' +
+      "</div>" +
+      '<section class="sk-card">' +
+      '<div class="sk-bg-opacity"><span class="sk-adjust-label">' + t("chatBgZoom") +
+      '</span><input type="range" min="100" max="300" step="5" value="' +
+      Math.round(d.scale * 100) + '" data-act="bg-zoom" aria-label="' + t("chatBgZoom") + '"></div>' +
+      "</section>" +
+      '<div class="sk-bg-actions">' +
+      '<button type="button" class="sk-btn primary" data-act="bg-apply">' + t("chatBgApply") + "</button>" +
+      '<button type="button" class="sk-btn" data-act="bg-reset">' + t("chatBgReset") + "</button>" +
+      '<button type="button" class="sk-btn" data-act="bg-adjust-cancel">' + t("chatBgCancel") + "</button>" +
+      "</div>" +
       "</div>"
     );
   }
@@ -1995,6 +2356,8 @@
     if (view === "account") return accountHtml();
     if (view === "data") return dataHtml();
     if (view === "personalize") return personalizeHtml();
+    if (view === "chatbg") return chatBgHtml();
+    if (view === "bg-adjust") return adjustBgHtml();
     if (view === "characters") return charactersHtml();
     if (view === "character") return characterHtml();
     if (view === "memory") return memoryHtml();
@@ -2086,6 +2449,45 @@
     closeSettings();
   }
 
+  /* 调整页：拖动舞台改变背景位置。用指针位移换算百分比，向上拖显示图片下半部分 */
+  function installAdjustDrag(container) {
+    var dragging = false;
+    var startX = 0, startY = 0, startPX = 0, startPY = 0;
+    container.addEventListener("pointerdown", function (e) {
+      if (!state.bgDraft || !e.target.closest("#sk-adjust-stage")) return;
+      dragging = true;
+      startX = e.clientX; startY = e.clientY;
+      startPX = state.bgDraft.posX; startPY = state.bgDraft.posY;
+      var stage = e.target.closest("#sk-adjust-stage");
+      if (stage && stage.setPointerCapture) {
+        try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+      e.stopPropagation();
+      e.preventDefault();
+    }, true);
+    container.addEventListener("pointermove", function (e) {
+      if (!dragging || !state.bgDraft) return;
+      var stage = document.querySelector("#sk-adjust-stage");
+      if (!stage) return;
+      var r = stage.getBoundingClientRect();
+      // 拖动方向与背景位移相反：手指向左，图片向左，露出右侧 => posX 增大
+      var dx = (startX - e.clientX) / Math.max(1, r.width) * 60;
+      var dy = (startY - e.clientY) / Math.max(1, r.height) * 60;
+      state.bgDraft.posX = Math.round(Math.max(0, Math.min(100, startPX + dx)) * 10) / 10;
+      state.bgDraft.posY = Math.round(Math.max(0, Math.min(100, startPY + dy)) * 10) / 10;
+      stage.style.cssText = adjustPreviewCss(state.bgDraft);
+      e.stopPropagation();
+      e.preventDefault();
+    }, true);
+    function endDrag(e) {
+      if (!dragging) return;
+      dragging = false;
+      e.stopPropagation();
+    }
+    container.addEventListener("pointerup", endDrag, true);
+    container.addEventListener("pointercancel", endDrag, true);
+  }
+
   function mount() {
     if (root) return;
     busy = true;
@@ -2102,6 +2504,7 @@
     }
     root.addEventListener("click", onClick);
     root.addEventListener("input", onInput);
+    installAdjustDrag(root);
     document.addEventListener("keydown", onKeydown, true);
     busy = false;
     pushHistEntry();
@@ -2527,6 +2930,24 @@
 
   /* ---------------- 交互 ---------------- */
   function onInput(e) {
+    var zoomSlider = e.target.closest && e.target.closest('[data-act="bg-zoom"]');
+    if (zoomSlider) {
+      if (state.bgDraft) state.bgDraft.scale = Number(zoomSlider.value) / 100;
+      var stageZ = document.querySelector("#sk-adjust-stage");
+      if (stageZ && state.bgDraft) stageZ.style.cssText = adjustPreviewCss(state.bgDraft);
+      return;
+    }
+    var bgSlider = e.target.closest && e.target.closest('[data-act="bg-opacity"]');
+    if (bgSlider) {
+      var bg = readBg();
+      bg.opacity = Number(bgSlider.value);
+      writeBg(bg);
+      applyChatBg();
+      var pv = document.querySelector("#sk-settings .sk-bg-preview");
+      if (pv) pv.style.cssText = "background-image:" + bgImageCss(bg) +
+        (bg.type === "image" ? ";background-size:cover," + Math.round(bg.scale * 100) + "%;background-position:center," + bg.posX + "% " + bg.posY + "%" : "");
+      return;
+    }
     var f = e.target.closest && e.target.closest("[data-field]");
     if (!f) return;
     var k = f.getAttribute("data-field");
@@ -2684,6 +3105,75 @@
     }
     if (act === "personalize") {
       view = "personalize";
+      paint();
+      return;
+    }
+    if (act === "chatbg") {
+      backStack.push("personalize");
+      view = "chatbg";
+      paint();
+      return;
+    }
+    if (act === "bg-preset") {
+      var pk = el.getAttribute("data-preset") || "none";
+      var b1 = readBg();
+      b1.type = pk === "none" ? "none" : "preset";
+      b1.preset = pk === "none" ? b1.preset : pk;
+      writeBg(b1);
+      applyChatBg();
+      paint();
+      return;
+    }
+    if (act === "bg-pick") {
+      pickBackgroundImage();
+      return;
+    }
+    if (act === "bg-adjust") {
+      var cur = readBg();
+      state.bgDraft = {
+        image: cur.image,
+        opacity: cur.opacity,
+        posX: cur.posX,
+        posY: cur.posY,
+        scale: cur.scale
+      };
+      backStack.push("chatbg");
+      view = "bg-adjust";
+      paint();
+      return;
+    }
+    if (act === "bg-apply") {
+      var d = state.bgDraft;
+      if (!d || !d.image) { toast(t("chatBgNoImage")); return; }
+      writeBg({ type: "image", preset: "aurora", image: d.image, opacity: d.opacity, posX: d.posX, posY: d.posY, scale: d.scale });
+      applyChatBg();
+      state.bgDraft = null;
+      view = backStack.length ? backStack.pop() : "chatbg";
+      paint();
+      toast(t("chatBgApplied"));
+      return;
+    }
+    if (act === "bg-reset") {
+      if (state.bgDraft) {
+        state.bgDraft.posX = 50;
+        state.bgDraft.posY = 50;
+        state.bgDraft.scale = 1;
+      }
+      paint();
+      return;
+    }
+    if (act === "bg-adjust-cancel") {
+      state.bgDraft = null;
+      view = backStack.length ? backStack.pop() : "chatbg";
+      paint();
+      return;
+    }
+    if (act === "bg-clear") {
+      var b2 = readBg();
+      b2.type = "none";
+      b2.image = "";
+      writeBg(b2);
+      applyChatBg();
       paint();
       return;
     }
