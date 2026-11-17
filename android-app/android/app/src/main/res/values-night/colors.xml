@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 深色模式下与应用深色背景一致（跟随系统） -->
+    <color name="app_status_bar">#292A2D</color>
+    <color name="app_nav_bar">#292A2D</color>
+</resources>

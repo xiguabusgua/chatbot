@@ -1,0 +1,17 @@
+{
+  "name": "2026_11_17_08-24-17",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "playwright": "^1.65.1",
+    "pngjs": "^7.0.0",
+    "ws": "^8.23.0"
+  }
+}

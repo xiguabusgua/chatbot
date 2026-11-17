@@ -1,0 +1,12 @@
+{
+  "appId": "com.chatbot.demo",
+  "appName": "chatbot",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false,
+    "webContentsDebuggingEnabled": true
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

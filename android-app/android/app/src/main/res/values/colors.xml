@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 状态栏/导航栏颜色：浅色模式下与界面白色一致 -->
+    <color name="app_status_bar">#FFFFFF</color>
+    <color name="app_nav_bar">#FFFFFF</color>
+</resources>

@@ -1,0 +1,59 @@
+# ==========================================================
+# chatbot 项目 .gitignore
+# 原则：只提交源码、配置与文档；排除签名私钥、构建产物、
+#      大体积 SDK/模拟器镜像、依赖目录与本地私有数据。
+# ==========================================================
+
+# ---------- 签名材料（绝对不能提交） ----------
+*.jks
+*.keystore
+keystore.properties
+android-app/android/keystore/
+!android-app/android/keystore/README.txt
+
+# ---------- 本地环境配置 ----------
+local.properties
+*.log
+
+# ---------- 大体积 SDK / 模拟器 ----------
+android-sdk/
+.avd/
+*.img
+*.qcow2
+
+# ---------- 依赖目录 ----------
+node_modules/
+**/node_modules/
+
+# ---------- 构建产物 ----------
+build/
+**/build/
+.gradle/
+**/.gradle/
+www/
+**/www/
+e2e/artifacts/
+*.apk
+*.aab
+*.dex
+*.class
+*.o
+
+# Capacitor sync 生成的 Web 副本（由 npm run sync 重建）
+android-app/android/app/src/main/assets/public/
+android-app/android/app/src/main/assets/capacitor.config.json
+android-app/android/app/src/main/assets/capacitor.plugins.json
+android-app/android/app/src/main/res/xml/config.xml
+
+# ---------- IDE / 编辑器 ----------
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# ---------- 会话与私有工作数据 ----------
+.workbuddy/
+
+# ---------- 测试临时产物 ----------
+e2e/artifacts/
+e2e/*.tmp.*
