@@ -1690,3 +1690,129 @@ body[data-ds-dark-theme] #sk-char-badge {
   --sk-accent-bg: rgba(120, 145, 255, 0.16);
   --sk-accent-fg: #a9bcff;
 }
+
+/* ==================== 角色头像 / 性格 ==================== */
+.sk-char-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--sk-tap, rgba(0,0,0,0.06));
+  color: var(--sk-ico, #1a1a1a);
+  font-size: 16px;
+  font-weight: 600;
+  vertical-align: middle;
+}
+.sk-char-avatar-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sk-char-avatar-ph { line-height: 1; }
+#sk-settings .sk-char-row { align-items: center; }
+#sk-settings .sk-char-row .sk-char-avatar { margin-right: 12px; cursor: pointer; }
+#sk-settings .sk-char-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+}
+#sk-settings .sk-char-avatar-row .sk-char-avatar { width: 64px; height: 64px; flex-basis: 64px; font-size: 24px; }
+.skp-opt { display: flex; align-items: center; gap: 10px; }
+.skp-opt .sk-char-avatar { width: 34px; height: 34px; flex-basis: 34px; font-size: 14px; }
+#sk-ctx .skc-role { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+#sk-ctx .skc-role .sk-char-avatar { width: 34px; height: 34px; flex-basis: 34px; font-size: 14px; }
+#sk-ctx .skc-role .skc-role-name { flex: 1; }
+#sk-ctx .skc-role .skc-role-desc { flex-basis: 100%; margin: 0; }
+
+/* ==================== API 价格表 ==================== */
+#sk-settings .sk-price-model { padding: 14px 16px; border-bottom: 1px solid var(--sk-line); }
+#sk-settings .sk-price-model:last-child { border-bottom: none; }
+#sk-settings .sk-price-name { font-size: 15px; font-weight: 600; margin-bottom: 10px; color: var(--sk-text); }
+#sk-settings .sk-price-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px 10px; font-size: 12px; }
+#sk-settings .sk-price-k { grid-column: 1 / -1; color: var(--sk-label); margin-top: 4px; }
+#sk-settings .sk-price-v { color: var(--sk-text); }
+#sk-settings .sk-price-extra { display: flex; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--sk-line); font-size: 13px; }
+#sk-settings .sk-price-extra:last-child { border-bottom: none; }
+#sk-settings .sk-price-extra span { color: var(--sk-label); }
+#sk-settings .sk-price-extra b { color: var(--sk-text); font-weight: 500; }
+#sk-settings [data-price] { width: 100%; }
+#sk-settings .sk-field label { display: block; font-size: 12px; color: var(--sk-label); margin-bottom: 4px; }
+
+/* ==================== 从链接导入 ==================== */
+.sk-iu-box {
+  position: fixed;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(420px, 92vw);
+  padding: 22px;
+  border-radius: 16px;
+  background: var(--sk-card, #fff);
+  color: var(--sk-text, #0d0d0d);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  z-index: 2147483012;
+}
+.sk-iu-title { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+.sk-iu-hint { font-size: 13px; opacity: 0.75; margin: 0 0 14px; line-height: 1.5; }
+.sk-iu-input {
+  width: 100%; padding: 10px 12px; box-sizing: border-box;
+  border: 1px solid var(--sk-line, #e8ebee); border-radius: 10px;
+  background: var(--sk-page, #f2f3f5); color: var(--sk-text, #0d0d0d); font-size: 14px;
+}
+.sk-iu-actions { display: flex; gap: 10px; margin-top: 16px; }
+.sk-iu-actions .sk-btn { flex: 1; }
+
+/* ==================== 世界书 / 群聊场景 ==================== */
+#sk-settings .sk-world-members { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 8px; }
+#sk-settings .sk-world-member {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--sk-text); cursor: pointer;
+}
+#sk-settings .sk-world-member input { accent-color: var(--sk-accent, #4d6bfe); }
+#sk-settings .sk-world-member .sk-char-avatar { width: 28px; height: 28px; flex-basis: 28px; font-size: 12px; }
+#sk-settings [data-world-field] { width: 100%; }
+
+/* ==================== 微信风格界面 ==================== */
+body[data-sk-wechat="on"] .sider-ac14ac {
+  background: #ededed !important;
+}
+body[data-sk-wechat="on"] .list-ac14ac .item-ff6fc9 {
+  position: relative;
+  min-height: 72px !important;
+  margin: 0 !important;
+  padding: 12px 12px 12px 62px !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+  background: #f7f7f7 !important;
+  color: #191919 !important;
+}
+body[data-sk-wechat="on"] .list-ac14ac .item-ff6fc9.active-ff6fc9 {
+  background: #c9c9c9 !important;
+}
+body[data-sk-wechat="on"] .list-ac14ac .item-ff6fc9 .sk-wx-avatar {
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  width: 40px; height: 40px;
+  border-radius: 5px;
+  background: #d8d8d8;
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 600;
+  overflow: hidden;
+}
+body[data-sk-wechat="on"] .list-ac14ac .item-ff6fc9 .sk-wx-avatar img { width: 100%; height: 100%; object-fit: cover; }
+body[data-sk-wechat="on"] .header-cf83dc {
+  background: #ededed !important;
+}
+body[data-sk-wechat="on"] [class*="sendButton-"] {
+  background: #07c160 !important;
+}
+html[data-ds-dark-theme] body[data-sk-wechat="on"] .sider-ac14ac,
+body[data-ds-dark-theme][data-sk-wechat="on"] .sider-ac14ac { background: #1a1a1a !important; }
+html[data-ds-dark-theme] body[data-sk-wechat="on"] .list-ac14ac .item-ff6fc9,
+body[data-ds-dark-theme][data-sk-wechat="on"] .list-ac14ac .item-ff6fc9 { background: #232323 !important; color: #e8e8e8 !important; }
+html[data-ds-dark-theme] body[data-sk-wechat="on"] .list-ac14ac .item-ff6fc9.active-ff6fc9,
+body[data-ds-dark-theme][data-sk-wechat="on"] .list-ac14ac .item-ff6fc9.active-ff6fc9 { background: #333 !important; }
+html[data-ds-dark-theme] body[data-sk-wechat="on"] .header-cf83dc,
+body[data-ds-dark-theme][data-sk-wechat="on"] .header-cf83dc { background: #1a1a1a !important; }

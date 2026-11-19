@@ -1,4 +1,4 @@
-# APK 打包交付报告（chatbot 0.1.1 / V48）
+# APK 打包交付报告（chatbot 0.1.1 / V51）
 
 - 执行时间：2026-11-17 12:39（北京时间）
 - 产物路径：`android-app/android/app/build/outputs/apk/release/app-release.apk`（约 5.0 MB）
@@ -15,10 +15,30 @@
 |---|---|
 | 包名 | com.chatbot.demo |
 | 应用名 | chatbot |
-| versionCode / versionName | 48 / 0.1.1 |
+| versionCode / versionName | 51 / 0.1.1 |
 | minSdk / targetSdk | 23（Android 6.0+）/ 34（规避 Android 15 强制 edge-to-edge） |
 | 签名 | chatbot-release.jks（alias: chatbot） |
 | 编译 SDK | 35 |
+
+## 1.8 世界书与微信风格界面（v51）
+
+按 grill-me 讨论确认的结论落地两项大改：
+
+- **世界书（群聊场景）**：每张角色卡自动绑定一个同名世界书（成员名单+场景背景）；角色详情页可编辑场景名称、背景、勾选在场成员；发请求时 system 注入「群聊场景+背景+在场成员设定」，主角色发言、其他成员仅作背景，零 API 改动
+- **微信风格界面**：个性化页全局开关，开启后侧栏会话列表改微信样式（灰底、圆角头像方块、分隔线、选中态），发送按钮改微信绿；深色模式适配；关闭回到原界面
+- 验证：social-check 10/10；全套 15 套回归 160 项全通过
+- 说明：live2D 按讨论结论暂缓（缺模型与 SDK）；会话列表标题仍为原应用生成的「新对话」，未改动原应用逻辑
+
+## 1.7 清单基础项（v49-v50）
+
+按 11.19 更新清单，经讨论确认后先落地基础项：
+
+- **内存缓存层**：readChars/readMem/readIndex 缓存解析结果并记录 localStorage 原始串，外部改写自动失效；右侧上下文边栏显示缓存命中次数
+- **角色卡字段扩展**：新增 personality（性格标签，注入 system 单列一段）和 avatar（相册选图+压缩）；角色列表/新对话选择器/上下文边栏显示头像，头像点击进入详情编辑
+- **API 价格表**（设置→账户）：内置从官网核实的真实价格（deepseek-flash / deepseek-v4-pro，分高峰/非高峰×缓存命中/未命中/输出，USD/1M tokens），可手动编辑；余额页入口进入
+- **从链接导入**：设置→数据管理新增入口，粘贴 ZIP 下载地址→fetch→DataTransfer 注入原应用 file input 复用解析；实测 DataTransfer 在 Chromium/WebView 可用
+- 验证：base-check 7/7、feature-check 11/11；全套 14 套回归 150 项全通过
+- 待办（大改，下一阶段）：世界书群聊场景 + 微信风格界面（共用一套 UI）
 
 ## 1.6 清单修复项（v48）
 

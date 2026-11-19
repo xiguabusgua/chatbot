@@ -97,6 +97,14 @@
       clear: "清除",
       localData: "本地对话数据",
       importChat: "导入历史对话",
+      importUrl: "从链接导入",
+      importUrlHint: "粘贴对话备份 ZIP 的下载地址",
+      importUrlPh: "https://example.com/backup.zip",
+      importUrlStart: "开始导入",
+      importUrlInvalid: "请输入有效的 http(s) 链接",
+      importUrlFetch: "正在下载备份…",
+      importUrlFail: "下载失败，请检查链接或网络",
+      importUrlNoInput: "未找到导入控件，请使用文件导入",
       exportChat: "导出所有历史对话",
       deleteChat: "删除所有对话",
       dataHint: "导入支持 DeepSeek 导出的 ZIP 文件；导出内容包含全部对话与本地图片原件，不含 API Key。",
@@ -158,6 +166,8 @@
       bubbleRadius: "气泡圆角",
       bubbleWidth: "气泡宽度",
       bubblePreview: "你好，这是一条示例消息",
+      wechatMode: "微信风格界面",
+      wechatModeHint: "会话列表与聊天顶栏切换到微信风格",
       chatBg: "聊天背景",
       chatBgGroup: "聊天背景",
       chatBgApplied: "背景已应用",
@@ -196,6 +206,17 @@
       balanceAvailable: "余额可用",
       balanceUnavailable: "余额不足",
       balanceTotal: "总余额",
+      priceTable: "API 价格表",
+      priceRef: "参考价，单位 USD / 1M tokens，以官网为准",
+      priceEdit: "编辑价格",
+      pricePeak: "高峰",
+      priceOff: "非高峰",
+      priceCacheHit: "缓存命中",
+      priceCacheMiss: "缓存未命中",
+      priceOutput: "输出",
+      priceExtras: "其他计费",
+      priceSaved: "价格表已保存",
+      priceTip: "高峰：周一至周五 01:00-04:00、06:00-10:00 UTC，节假日除外",
       balanceGranted: "赠送",
       balanceTopped: "充值",
       balanceNoKey: "请先填写并保存 API Key",
@@ -210,6 +231,18 @@
       characterEdit: "编辑角色",
       characterName: "角色名称",
       characterNamePh: "例如：林工，材料顾问",
+      characterPersonality: "性格标签",
+      characterPersonalityPh: "例如：外向、毒舌、护短（逗号分隔）",
+      worldGroup: "群聊场景（世界书）",
+      worldName: "场景名称",
+      worldBackground: "场景背景设定",
+      worldBackgroundPh: "例如：一间深夜还亮着灯的材料实验室",
+      worldMembers: "在场成员",
+      worldMemberHint: "勾选的角色作为群成员在场，主角色仍只有当前角色发言",
+      worldSaved: "群聊场景已保存",
+      characterAvatar: "角色头像",
+      characterAvatarPick: "选择头像",
+      characterAvatarNone: "未设置",
       characterPersona: "人设描述",
       characterPersonaPh: "例如：你是资深冷轧工艺工程师，说话简短，先给结论再给参数。",
       characterGreeting: "开场白",
@@ -276,6 +309,7 @@
       ctxSystem: "系统提示词",
       ctxRecent: "最近更新",
       ctxNote: "以上为本次请求实际拼入 system 的内容来源",
+      ctxCache: "缓存命中",
       savedToDevice: "已保存 {n}，可在分享面板中转存",
       downloadFailed: "保存文件失败，请重试",
       obWelcome: "欢迎使用 chatbot",
@@ -334,6 +368,14 @@
       clear: "Clear",
       localData: "Local chats",
       importChat: "Import chat history",
+      importUrl: "Import from link",
+      importUrlHint: "Paste the download URL of a chat backup ZIP",
+      importUrlPh: "https://example.com/backup.zip",
+      importUrlStart: "Import",
+      importUrlInvalid: "Enter a valid http(s) URL",
+      importUrlFetch: "Downloading backup…",
+      importUrlFail: "Download failed, check the URL or network",
+      importUrlNoInput: "Import control not found, use file import instead",
       exportChat: "Export all chats",
       deleteChat: "Delete all chats",
       dataHint:
@@ -395,6 +437,8 @@
       bubbleRadius: "Bubble corners",
       bubbleWidth: "Bubble width",
       bubblePreview: "Hi, this is a sample message",
+      wechatMode: "WeChat-style UI",
+      wechatModeHint: "Switch the chat list and header to WeChat style",
       chatBg: "Chat background",
       chatBgGroup: "Chat background",
       chatBgApplied: "Background applied",
@@ -433,6 +477,17 @@
       balanceAvailable: "Sufficient",
       balanceUnavailable: "Insufficient",
       balanceTotal: "Total",
+      priceTable: "API pricing",
+      priceRef: "Reference, USD per 1M tokens. Check official docs.",
+      priceEdit: "Edit prices",
+      pricePeak: "Peak",
+      priceOff: "Off-peak",
+      priceCacheHit: "Cache hit",
+      priceCacheMiss: "Cache miss",
+      priceOutput: "Output",
+      priceExtras: "Other charges",
+      priceSaved: "Pricing saved",
+      priceTip: "Peak: Mon-Fri 01:00-04:00 & 06:00-10:00 UTC, excluding holidays",
       balanceGranted: "Granted",
       balanceTopped: "Topped up",
       balanceNoKey: "Save an API Key first",
@@ -447,6 +502,18 @@
       characterEdit: "Edit character",
       characterName: "Name",
       characterNamePh: "e.g. Lin, materials advisor",
+      characterPersonality: "Personality tags",
+      characterPersonalityPh: "e.g. outgoing, sarcastic, loyal (comma separated)",
+      worldGroup: "Group scene (World Book)",
+      worldName: "Scene name",
+      worldBackground: "Scene background",
+      worldBackgroundPh: "e.g. A materials lab still lit late at night",
+      worldMembers: "Present members",
+      worldMemberHint: "Checked characters are present; only the main character speaks",
+      worldSaved: "Group scene saved",
+      characterAvatar: "Avatar",
+      characterAvatarPick: "Choose image",
+      characterAvatarNone: "None",
       characterPersona: "Persona",
       characterPersonaPh: "e.g. You are a senior cold-rolling engineer. Be brief, conclusion first.",
       characterGreeting: "Greeting",
@@ -513,6 +580,7 @@
       ctxSystem: "System prompt",
       ctxRecent: "Updated",
       ctxNote: "What this request actually put into the system prompt",
+      ctxCache: "Cache hits",
       savedToDevice: "Saved {n}, use the share sheet to keep it",
       downloadFailed: "Failed to save file, please retry",
       obWelcome: "Welcome to chatbot",
@@ -620,6 +688,95 @@
       if (test(normalize(list[i]))) return list[i];
     }
     return null;
+  }
+
+  /* 从链接导入：下载 ZIP → DataTransfer 注入原应用 file input → 复用其解析 */
+  var importUrlMask = null;
+  function closeImportUrl() {
+    if (importUrlMask && importUrlMask.parentNode) importUrlMask.parentNode.removeChild(importUrlMask);
+    importUrlMask = null;
+  }
+
+  function openImportUrl() {
+    closeImportUrl();
+    importUrlMask = document.createElement("div");
+    importUrlMask.className = "skp-mask";
+    var box = document.createElement("div");
+    box.className = "sk-iu-box";
+    box.innerHTML =
+      '<div class="sk-iu-title">' + t("importUrl") + "</div>" +
+      '<p class="sk-iu-hint">' + t("importUrlHint") + "</p>" +
+      '<input type="url" class="sk-iu-input" placeholder="' + escapeAttr(t("importUrlPh")) + '">' +
+      '<div class="sk-iu-actions">' +
+      '<button type="button" class="sk-btn" data-iu="cancel">' + t("cancel") + "</button>" +
+      '<button type="button" class="sk-btn primary" data-iu="go">' + t("importUrlStart") + "</button>" +
+      "</div>";
+    importUrlMask.appendChild(box);
+    document.body.appendChild(importUrlMask);
+    importUrlMask.addEventListener("click", function (e) {
+      if (e.target === importUrlMask) { closeImportUrl(); return; }
+      var b = e.target.closest("[data-iu]");
+      if (!b) return;
+      if (b.getAttribute("data-iu") === "cancel") { closeImportUrl(); return; }
+      var url = (box.querySelector(".sk-iu-input").value || "").trim();
+      if (!/^https?:\/\//i.test(url)) { toast(t("importUrlInvalid")); return; }
+      closeImportUrl();
+      downloadAndImport(url);
+    });
+  }
+
+  function downloadAndImport(url) {
+    toast(t("importUrlFetch"));
+    fetch(url, { mode: "cors", credentials: "omit" })
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.blob();
+      })
+      .then(function (blob) {
+        var name = (url.split("?")[0].split("/").pop() || "backup.zip").replace(/[^A-Za-z0-9._-]/g, "_");
+        if (!/\.(zip)$/i.test(name)) name += ".zip";
+        var file = new File([blob], name, { type: "application/zip" });
+        return injectBackupFile(file);
+      })
+      .catch(function () {
+        toast((window.NativeGallery || !isNative()) ? t("importUrlFail") : t("importUrlFail"));
+      });
+  }
+
+  function injectBackupFile(file) {
+    return new Promise(function (resolve, reject) {
+      openDataTab(function (dlg) {
+        if (!dlg) { toast(t("importUrlNoInput")); reject(new Error("no dialog")); return; }
+        // 找到原应用数据页里的 file input
+        var input = null;
+        var candidates = dlg.querySelectorAll('input[type="file"]');
+        if (candidates.length) {
+          input = candidates[0];
+        } else {
+          // 点"上传"按钮触发应用创建 file input（短暂延迟后查找全局）
+          var btn = findButton(dlg, function (txt) { return txt === "上传" || txt === "Upload"; });
+          if (btn) btn.click();
+        }
+        setTimeout(function () {
+          if (!input) {
+            var all = document.querySelectorAll('input[type="file"]');
+            if (all.length) input = all[all.length - 1];
+          }
+          if (!input) { toast(t("importUrlNoInput")); reject(new Error("no input")); return; }
+          try {
+            var dt = new DataTransfer();
+            dt.items.add(file);
+            input.files = dt.files;
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+            toast(t("importing"));
+            resolve(true);
+          } catch (e) {
+            toast(t("importUrlNoInput"));
+            reject(e);
+          }
+        }, 200);
+      });
+    });
   }
 
   function openDataTab(done) {
@@ -854,6 +1011,93 @@
     );
   }
 
+  /* ---------------- API 价格表（内置参考价，可编辑） ---------------- */
+  var PRICE_KEY = "chat-demo:api-prices";
+  var DEFAULT_PRICES = {
+    models: [
+      { name: "deepseek-flash", peak: { hit: 0.006, miss: 0.3, out: 1.2 }, off: { hit: 0.003, miss: 0.15, out: 0.6 } },
+      { name: "deepseek-v4-pro", peak: { hit: 0.044, miss: 1.32, out: 3.96 }, off: { hit: 0.022, miss: 0.66, out: 1.98 } }
+    ],
+    extras: [
+      { name: "Search / Fetch API", price: "$0.75 / 1,000 req" },
+      { name: "File parsing / OCR", price: "$0.225 / 1,000 pages" },
+      { name: "TTS", price: "$0.225 / 10k chars" },
+      { name: "ASR", price: "$0.058 / hour" }
+    ],
+    updated: "2026-11-19"
+  };
+
+  function readPrices() {
+    var raw = read(PRICE_KEY, "");
+    if (!raw) return JSON.parse(JSON.stringify(DEFAULT_PRICES));
+    try {
+      var o = JSON.parse(raw);
+      if (o && Array.isArray(o.models) && o.models.length) return o;
+    } catch (e) {}
+    return JSON.parse(JSON.stringify(DEFAULT_PRICES));
+  }
+
+  function writePrices(o) {
+    write(PRICE_KEY, JSON.stringify(o));
+  }
+
+  function pricesHtml() {
+    var p = readPrices();
+    var rows = p.models.map(function (m, i) {
+      return (
+        '<div class="sk-price-model"><div class="sk-price-name">' + escapeHtml(m.name) + "</div>" +
+        '<div class="sk-price-grid">' +
+        '<span class="sk-price-k">' + t("pricePeak") + '</span>' +
+        '<span class="sk-price-v">' + t("priceCacheHit") + ' $' + m.peak.hit + '</span>' +
+        '<span class="sk-price-v">' + t("priceCacheMiss") + ' $' + m.peak.miss + '</span>' +
+        '<span class="sk-price-v">' + t("priceOutput") + ' $' + m.peak.out + '</span>' +
+        '<span class="sk-price-k">' + t("priceOff") + '</span>' +
+        '<span class="sk-price-v">' + t("priceCacheHit") + ' $' + m.off.hit + '</span>' +
+        '<span class="sk-price-v">' + t("priceCacheMiss") + ' $' + m.off.miss + '</span>' +
+        '<span class="sk-price-v">' + t("priceOutput") + ' $' + m.off.out + '</span>' +
+        "</div></div>"
+      );
+    }).join("");
+    var extras = (p.extras || []).map(function (x) {
+      return '<div class="sk-price-extra"><span>' + escapeHtml(x.name) + "</span><b>" + escapeHtml(x.price) + "</b></div>";
+    }).join("");
+    return (
+      '<div class="sk-page">' +
+      header(t("priceTable"), "back") +
+      '<div class="sk-bg-hint">' + t("priceRef") + "（" + escapeHtml(p.updated || "") + "）</div>" +
+      '<section class="sk-card">' + rows + "</section>" +
+      '<div class="sk-group">' + t("priceExtras") + "</div>" +
+      '<section class="sk-card">' + (extras || '<p class="sk-hint">—</p>') + "</section>" +
+      '<p class="sk-bg-hint">' + t("priceTip") + "</p>" +
+      '<div class="sk-bg-actions"><button type="button" class="sk-btn primary" data-act="price-edit">' + t("priceEdit") + "</button></div>" +
+      "</div>"
+    );
+  }
+
+  function priceEditHtml() {
+    var p = readPrices();
+    var fields = "";
+    p.models.forEach(function (m, mi) {
+      [["peak", t("pricePeak")], ["off", t("priceOff")]].forEach(function (band) {
+        var bk = band[0], bl = band[1];
+        ["hit", "miss", "out"].forEach(function (k) {
+          var label = { hit: t("priceCacheHit"), miss: t("priceCacheMiss"), out: t("priceOutput") }[k];
+          fields +=
+            '<div class="sk-field"><label>' + escapeHtml(m.name + " · " + bl + " · " + label) + "</label>" +
+            '<input type="number" step="0.001" min="0" data-price="' + mi + "-" + bk + "-" + k +
+            '" value="' + m[bk][k] + '"></div>';
+        });
+      });
+    });
+    return (
+      '<div class="sk-page">' + header(t("priceEdit"), "back") +
+      '<div class="sk-bg-hint">' + t("priceRef") + "</div>" +
+      '<section class="sk-card sk-panel">' + fields + "</section>" +
+      '<div class="sk-bg-actions"><button type="button" class="sk-btn primary" data-act="price-save">' + t("characterSave") + "</button></div>" +
+      "</div>"
+    );
+  }
+
   function balanceBlock() {
     var st = balanceState;
     var body;
@@ -906,7 +1150,8 @@
       '<div class="sk-bal">' + body + "</div>" +
       '<div class="sk-actions"><button type="button" class="sk-btn primary" data-act="check-balance"' +
       (st && st.loading ? " disabled" : "") +
-      ">" + (st && st.loading ? t("balanceChecking") : t("balanceCheck")) + "</button></div>" +
+      ">" + (st && st.loading ? t("balanceChecking") : t("balanceCheck")) + "</button>" +
+      '<button type="button" class="sk-btn" data-act="prices">' + t("priceTable") + "</button></div>" +
       "</section>"
     );
   }
@@ -963,6 +1208,7 @@
       "</div>" +
       '<section class="sk-card">' +
       row("import", "upload", t("importChat")) +
+      row("import-url", "link", t("importUrl")) +
       row("export", "download", t("exportChat")) +
       row("delete", "trash", t("deleteChat"), "", { danger: true }) +
       "</section>" +
@@ -976,7 +1222,7 @@
   /* ---------------- 新增：字号 / 个性化 / 关于页 ---------------- */
   var FS_STEPS = ["s", "m", "l", "xl"];
   var FS_LABEL = { s: "fsSmall", m: "fsNormal", l: "fsLarge", xl: "fsXL" };
-  var APP_VERSION = { version: "0.1.1", build: "V48" };
+  var APP_VERSION = { version: "0.1.1", build: "V51" };
 
   /* 应用内更新：manifest 清单地址（json: {versionName,versionCode,apkUrl,notes}）。
      部署到你的服务器后改这里；也可在设备上用 localStorage["chat-demo:update-url"] 覆盖 */
@@ -1002,6 +1248,10 @@
 
   function readCaveat() {
     return read("chat-demo:caveat", "on") !== "off";
+  }
+
+  function readWechat() {
+    return read("chat-demo:wechat-mode", "off") === "on";
   }
 
   var BUBBLE_COLORS = ["default", "mint", "lilac", "sand"];
@@ -1203,6 +1453,39 @@
     input.click();
   }
 
+  /* 通用选图：直接压缩返回 dataUrl（角色头像用，不走背景调整页） */
+  function pickAvatar(cb) {
+    if (window.NativeGallery && typeof window.NativeGallery.pick === "function") {
+      var cbName = "__skAvatarCb" + Date.now();
+      window[cbName] = function (res) {
+        try { delete window[cbName]; } catch (e) { window[cbName] = null; }
+        if (res && res.ok && res.data) cb("data:image/jpeg;base64," + res.data);
+      };
+      try { window.NativeGallery.pick(cbName); }
+      catch (e) { delete window[cbName]; pickAvatarFile(cb); }
+      return;
+    }
+    pickAvatarFile(cb);
+  }
+
+  function pickAvatarFile(cb) {
+    var input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.style.display = "none";
+    document.body.appendChild(input);
+    input.addEventListener("change", function () {
+      var file = input.files && input.files[0];
+      if (!file) { if (input.parentNode) input.parentNode.removeChild(input); return; }
+      compressImage(file).then(function (d) { cb(d); }).catch(function () { toast(t("chatBgUploadFail")); })
+        .then(function () { if (input.parentNode) input.parentNode.removeChild(input); });
+    });
+    window.addEventListener("focus", function () {
+      if (input.parentNode) input.parentNode.removeChild(input);
+    }, { once: true });
+    input.click();
+  }
+
   function pickBackgroundImage() {
     if (window.NativeGallery && typeof window.NativeGallery.pick === "function") {
       var cbName = "__skGalleryCb" + Date.now();
@@ -1272,8 +1555,13 @@
     var mem = c ? readMem(c.id) : [];
     var days = ctxDaysList();
 
+    var ctxAv = c ? (c.avatar
+      ? '<img class="sk-char-avatar-img" src="' + c.avatar + '" alt="">'
+      : '<span class="sk-char-avatar-ph">' + escapeHtml((c.name || "?").slice(0, 1)) + "</span>") : "";
     var roleHtml = c
-      ? '<div class="skc-role"><span class="skc-role-name">' + escapeHtml(c.name) + "</span>" +
+      ? '<div class="skc-role"><span class="sk-char-avatar">' + ctxAv + "</span>" +
+        '<span class="skc-role-name">' + escapeHtml(c.name) + "</span>" +
+        (c.personality ? '<p class="skc-role-desc">' + escapeHtml(c.personality) + "</p>" : "") +
         (c.persona ? '<p class="skc-role-desc">' + escapeHtml(c.persona) + "</p>" : "") +
         "</div>"
       : '<p class="skc-empty">' + t("ctxNoRole") + "</p>";
@@ -1318,6 +1606,7 @@
       "<dt>" + t("ctxMemory") + "</dt><dd>" + (ctxState.memCount || 0) + " " + t("ctxItems") + "</dd>" +
       "<dt>" + t("ctxDaily") + "</dt><dd>" + (ctxState.daily ? (ctxState.dailyDays || 0) + " " + t("ctxDays") : "—") + "</dd>" +
       "<dt>" + t("ctxRecent") + "</dt><dd>" + new Date(ctxState.at).toLocaleTimeString() + "</dd>" +
+      "<dt>" + t("ctxCache") + "</dt><dd>" + cacheStats.hits + "</dd>" +
       "</dl></section>" +
       '<p class="skc-note">' + t("ctxNote") + "</p>";
   }
@@ -1408,10 +1697,15 @@
       t("noCharacter") +
       "</span></button>";
     list.forEach(function (c) {
+      var av = c.avatar
+        ? '<img class="sk-char-avatar-img" src="' + c.avatar + '" alt="">'
+        : '<span class="sk-char-avatar-ph">' + escapeHtml((c.name || "?").slice(0, 1)) + "</span>";
       html +=
         '<button type="button" class="skp-opt" data-pick="' + escapeAttr(c.id) + '">' +
+        '<span class="sk-char-avatar">' + av + "</span>" +
         '<span class="skp-name">' + escapeHtml(c.name) + "</span>" +
-        (c.persona ? '<span class="skp-sub">' + escapeHtml(c.persona.slice(0, 30)) + "</span>" : "") +
+        (c.personality ? '<span class="skp-sub">' + escapeHtml(c.personality.slice(0, 24)) + "</span>" :
+          c.persona ? '<span class="skp-sub">' + escapeHtml(c.persona.slice(0, 30)) + "</span>" : "") +
         "</button>";
     });
     html += '<button type="button" class="skp-cancel" data-close="1">' + t("cancel") + "</button>";
@@ -1486,13 +1780,42 @@
     );
   }
 
-  function readIndex() {
-    try {
-      var v = JSON.parse(read(DAILY_INDEX, "[]"));
-      return Array.isArray(v) ? v : [];
-    } catch (e) {
-      return [];
+  /* ---------------- 内存缓存层：减少重复的 JSON.parse ----------------
+     缓存条目记录 localStorage 原始字符串，读取时对比；外部直接改 localStorage
+     （如原应用或测试）导致版本变化时自动失效，避免读到陈旧数据。 */
+  var DATA_CACHE = { chars: null, index: null, worlds: null, mem: {} };
+  var cacheStats = { hits: 0, misses: 0 };
+  function cacheGet(slot, key, storageKey, loader) {
+    var owner = key == null ? DATA_CACHE : DATA_CACHE[slot];
+    var k = key == null ? slot : key;
+    var raw = read(storageKey, "");
+    var entry = owner ? owner[k] : null;
+    if (entry && entry.raw === raw) {
+      cacheStats.hits++;
+      return entry.value;
     }
+    cacheStats.misses++;
+    var val = loader();
+    if (owner) owner[k] = { raw: raw, value: val };
+    return val;
+  }
+  function cacheInvalidate(slot, key) {
+    if (key == null) {
+      DATA_CACHE[slot] = null;
+    } else if (DATA_CACHE[slot]) {
+      delete DATA_CACHE[slot][key];
+    }
+  }
+
+  function readIndex() {
+    return cacheGet("index", null, DAILY_INDEX, function () {
+      try {
+        var v = JSON.parse(read(DAILY_INDEX, "[]"));
+        return Array.isArray(v) ? v : [];
+      } catch (e) {
+        return [];
+      }
+    });
   }
 
   function dailyOn() {
@@ -1601,6 +1924,7 @@
     });
     if (!hit) idx.push({ date: date, chars: text.length });
     write(DAILY_INDEX, JSON.stringify(idx));
+    cacheInvalidate("index", null);
     if (!dirHandle) return Promise.resolve();
     return dirPermission().then(function (p) {
       if (p !== "granted") return;
@@ -1729,16 +2053,19 @@
 
   /* ---------------- 角色卡 / 记忆 ---------------- */
   function readChars() {
-    try {
-      var v = JSON.parse(read("chat-demo:characters", "[]"));
-      return Array.isArray(v) ? v : [];
-    } catch (e) {
-      return [];
-    }
+    return cacheGet("chars", null, "chat-demo:characters", function () {
+      try {
+        var v = JSON.parse(read("chat-demo:characters", "[]"));
+        return Array.isArray(v) ? v : [];
+      } catch (e) {
+        return [];
+      }
+    });
   }
 
   function writeChars(list) {
     write("chat-demo:characters", JSON.stringify(list));
+    cacheInvalidate("chars", null);
   }
 
   function activeId() {
@@ -1752,17 +2079,63 @@
     return null;
   }
 
-  function readMem(id) {
-    try {
-      var v = JSON.parse(read("chat-demo:memory:" + id, "[]"));
-      return Array.isArray(v) ? v : [];
-    } catch (e) {
-      return [];
+  /* ---------------- 世界书（群聊场景） ----------------
+     世界书 = {id,name,memberIds:[角色id],background,at}；用户是群主。
+     每张角色卡绑定一个默认世界（worldId）；对话仍绑单角色，主角色发言，
+     同世界其他成员作为"在场角色"注入 system，不实际发言。 */
+  var WORLD_KEY = "chat-demo:worlds";
+  function readWorlds() {
+    return cacheGet("worlds", null, WORLD_KEY, function () {
+      try {
+        var v = JSON.parse(read(WORLD_KEY, "[]"));
+        return Array.isArray(v) ? v : [];
+      } catch (e) {
+        return [];
+      }
+    });
+  }
+  function writeWorlds(list) {
+    write(WORLD_KEY, JSON.stringify(list));
+    cacheInvalidate("worlds", null);
+  }
+  function worldById(id) {
+    if (!id) return null;
+    var list = readWorlds();
+    for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
+    return null;
+  }
+  function ensureWorldForChar(c) {
+    if (!c) return null;
+    var w = worldById(c.worldId);
+    if (w) {
+      // 成员名单保持与角色卡同步
+      if (w.memberIds.indexOf(c.id) < 0) { w.memberIds.push(c.id); writeWorlds(readWorlds()); }
+      return w;
     }
+    var wid = "w" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+    w = { id: wid, name: c.name, memberIds: [c.id], background: "", at: Date.now() };
+    var all = readWorlds();
+    all.push(w);
+    writeWorlds(all);
+    c.worldId = wid;
+    return w;
+  }
+
+  function readMem(id) {
+    return cacheGet("mem", id, "chat-demo:memory:" + id, function () {
+      try {
+        var v = JSON.parse(read("chat-demo:memory:" + id, "[]"));
+        return Array.isArray(v) ? v : [];
+      } catch (e) {
+        return [];
+      }
+    });
   }
 
   function writeMem(id, list) {
-    write("chat-demo:memory:" + id, JSON.stringify(list.slice(-20)));
+    var out = list.slice(-20);
+    write("chat-demo:memory:" + id, JSON.stringify(out));
+    cacheInvalidate("mem", id);
   }
 
   function memAuto() {
@@ -1836,9 +2209,27 @@
   function characterPrompt(charId) {
     var c = charById(charId != null ? charId : activeId());
     if (!c) return "";
+    var w = worldById(c.worldId);
     var out = "【角色设定】\n你现在扮演「" + c.name + "」。";
+    if (c.personality) out += "\n性格特点：" + c.personality;
     if (c.persona) out += "\n" + c.persona;
     if (c.greeting) out += "\n开场风格参考：" + c.greeting;
+    // 世界书：群聊场景 + 在场成员（仅作背景，不实际发言）
+    if (w) {
+      out += "\n\n【群聊场景】" + (w.name || "群聊");
+      if (w.background) out += "\n场景背景：" + w.background;
+      var others = [];
+      var mids = w.memberIds || [];
+      for (var j = 0; j < mids.length; j++) {
+        if (mids[j] === c.id) continue;
+        var oc = charById(mids[j]);
+        if (oc) others.push("「" + oc.name + "」" + (oc.personality ? "（" + oc.personality + "）" : "") + (oc.persona ? "：" + oc.persona : ""));
+      }
+      if (others.length) {
+        out += "\n【在场的其他成员（仅作背景，由你统一以" + c.name + "的口吻回应，不要代替他们发言）】";
+        for (var k = 0; k < others.length; k++) out += "\n- " + others[k];
+      }
+    }
     var mem = readMem(c.id);
     if (mem.length) {
       out += "\n\n【关于用户的长期记忆】";
@@ -1966,6 +2357,8 @@
     else document.body.setAttribute("data-sk-density", density);
     if (caveat) document.body.removeAttribute("data-sk-caveat");
     else document.body.setAttribute("data-sk-caveat", "off");
+    if (readWechat()) document.body.setAttribute("data-sk-wechat", "on");
+    else document.body.removeAttribute("data-sk-wechat");
 
     var bub = readBubble();
     if (bub.color === "default") document.body.removeAttribute("data-sk-bubble");
@@ -2006,6 +2399,7 @@
       '<section class="sk-card">' +
       toggleRow("toggle-density", t("density"), t("densityHint"), readDensity() === "compact") +
       toggleRow("toggle-caveat", t("caveatToggle"), t("caveatHint"), readCaveat()) +
+      toggleRow("toggle-wechat", t("wechatMode"), t("wechatModeHint"), readWechat()) +
       "</section>" +
       '<div class="sk-group">' +
       t("bubbleGroup") +
@@ -2207,9 +2601,18 @@
     var act = activeId();
     var rows = list
       .map(function (c) {
-        return row("char-open", "user", escapeHtml(c.name), c.id === act ? t("characterOn") : "", {
-          attr: 'data-id="' + escapeAttr(c.id) + '"'
-        });
+        var av = c.avatar
+          ? '<img class="sk-char-avatar-img" src="' + c.avatar + '" alt="">'
+          : '<span class="sk-char-avatar-ph">' + escapeHtml((c.name || "?").slice(0, 1)) + "</span>";
+        return (
+          '<button type="button" class="sk-row sk-char-row" data-act="char-open" data-id="' +
+          escapeAttr(c.id) + '">' +
+          '<span class="sk-char-avatar" data-act="char-open" data-id="' + escapeAttr(c.id) + '">' + av + "</span>" +
+          '<span class="sk-label">' + escapeHtml(c.name) + "</span>" +
+          (c.id === act ? '<span class="sk-val">' + t("characterOn") + "</span>" : "") +
+          '<span class="sk-arrow">' + icon("right") + "</span>" +
+          "</button>"
+        );
       })
       .join("");
     return (
@@ -2226,9 +2629,12 @@
   }
 
   function characterHtml() {
-    var d = state.draft || { name: "", persona: "", greeting: "" };
+    var d = state.draft || { name: "", persona: "", greeting: "", personality: "", avatar: "" };
     var isNew = !state.editId;
     var isActive = !isNew && activeId() === state.editId;
+    var avatarHtml = d.avatar
+      ? '<img class="sk-char-avatar-img" src="' + d.avatar + '" alt="">'
+      : '<span class="sk-char-avatar-ph">' + escapeHtml((d.name || "?").slice(0, 1)) + "</span>";
     var actions =
       '<button type="button" class="sk-btn primary" data-act="char-save">' + t("characterSave") + "</button>";
     if (!isNew) {
@@ -2242,17 +2648,54 @@
     return (
       '<div class="sk-page">' +
       header(isNew ? t("characterNew") : t("characterEdit"), "back") +
+      '<div class="sk-group">' + t("characterAvatar") + "</div>" +
+      '<section class="sk-card sk-panel"><div class="sk-char-avatar-row">' +
+      '<span class="sk-char-avatar" id="sk-char-avatar-preview">' + avatarHtml + "</span>" +
+      '<button type="button" class="sk-btn" data-act="char-avatar">' + t("characterAvatarPick") + "</button>" +
+      "</div></section>" +
       '<div class="sk-group">' + t("characterName") + "</div>" +
       '<section class="sk-card sk-panel"><div class="sk-field"><input data-field="name" value="' +
       escapeAttr(d.name || "") + '" placeholder="' + escapeAttr(t("characterNamePh")) + '"></div></section>' +
+      '<div class="sk-group">' + t("characterPersonality") + "</div>" +
+      '<section class="sk-card sk-panel"><div class="sk-field"><input data-field="personality" value="' +
+      escapeAttr(d.personality || "") + '" placeholder="' + escapeAttr(t("characterPersonalityPh")) + '"></div></section>' +
       '<div class="sk-group">' + t("characterPersona") + "</div>" +
       '<section class="sk-card sk-panel"><div class="sk-field sk-field-area"><textarea data-field="persona" rows="4" placeholder="' +
       escapeAttr(t("characterPersonaPh")) + '">' + escapeHtml(d.persona || "") + "</textarea></div></section>" +
       '<div class="sk-group">' + t("characterGreeting") + "</div>" +
       '<section class="sk-card sk-panel"><div class="sk-field"><input data-field="greeting" value="' +
       escapeAttr(d.greeting || "") + '" placeholder="' + escapeAttr(t("characterGreetingPh")) + '"></div></section>' +
+      (!isNew && d.world ? worldEditHtml(d.world) : "") +
       '<div class="sk-actions sk-col">' + actions + "</div>" +
       "</div>"
+    );
+  }
+
+  function worldEditHtml(w) {
+    var all = readChars();
+    var members = w.memberIds || [];
+    var boxes = all.map(function (c) {
+      var on = members.indexOf(c.id) > -1;
+      var av = c.avatar
+        ? '<img class="sk-char-avatar-img" src="' + c.avatar + '" alt="">'
+        : '<span class="sk-char-avatar-ph">' + escapeHtml((c.name || "?").slice(0, 1)) + "</span>";
+      return (
+        '<label class="sk-world-member"><input type="checkbox" data-world-member="' + escapeAttr(c.id) + '"' +
+        (on ? " checked" : "") + '><span class="sk-char-avatar">' + av + "</span>" +
+        '<span>' + escapeHtml(c.name) + "</span></label>"
+      );
+    }).join("");
+    return (
+      '<div class="sk-group">' + t("worldGroup") + "</div>" +
+      '<section class="sk-card sk-panel">' +
+      '<div class="sk-field"><label>' + t("worldName") + '</label><input data-world-field="name" value="' +
+      escapeAttr(w.name || "") + '"></div>' +
+      '<div class="sk-field sk-field-area"><label>' + t("worldBackground") + '</label><textarea data-world-field="background" rows="3" placeholder="' +
+      escapeAttr(t("worldBackgroundPh")) + '">' + escapeHtml(w.background || "") + "</textarea></div>" +
+      '<div class="sk-field"><label>' + t("worldMembers") + '</label><p class="sk-hint">' + t("worldMemberHint") + "</p>" +
+      '<div class="sk-world-members">' + boxes + "</div></div>" +
+      '<button type="button" class="sk-btn" data-act="world-save">' + t("worldSaved") + "</button>" +
+      "</section>"
     );
   }
 
@@ -2390,6 +2833,8 @@
     if (view === "personalize") return personalizeHtml();
     if (view === "chatbg") return chatBgHtml();
     if (view === "bg-adjust") return adjustBgHtml();
+    if (view === "prices") return pricesHtml();
+    if (view === "price-edit") return priceEditHtml();
     if (view === "characters") return charactersHtml();
     if (view === "character") return characterHtml();
     if (view === "memory") return memoryHtml();
@@ -2805,10 +3250,28 @@
     } else if (act === "finish") closeOnboarding(true);
   }, true);
 
+  /* 微信风格：给会话列表项注入头像（React 重建后由 check 每次补齐） */
+  function applyWechatList() {
+    if (!readWechat()) return;
+    var c = activeChar();
+    var av = c && c.avatar
+      ? '<img src="' + c.avatar + '" alt="">'
+      : '<span>' + escapeHtml(c ? (c.name || "聊").slice(0, 1) : "聊") + "</span>";
+    var items = document.querySelectorAll(".list-ac14ac .item-ff6fc9");
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].querySelector(".sk-wx-avatar")) continue;
+      var a = document.createElement("span");
+      a.className = "sk-wx-avatar";
+      a.innerHTML = av;
+      items[i].insertBefore(a, items[i].firstChild);
+    }
+  }
+
   function check() {
     if (busy) return;
     if (obEl) return; // 引导层接管期间不处理设置页
     refreshCharBadge();
+    applyWechatList();
     if (Date.now() < suppressSettingsUntil) return;
     liftModals();
     if (!onboardDone() && !userInteracted) {
@@ -3065,6 +3528,10 @@
       );
       return;
     }
+    if (act === "import-url") {
+      openImportUrl();
+      return;
+    }
     if (act === "import") {
       openDataTab(function (dlg) {
         var btn = findButton(dlg, function (txt) {
@@ -3222,6 +3689,12 @@
       paint();
       return;
     }
+    if (act === "toggle-wechat") {
+      write("chat-demo:wechat-mode", readWechat() ? "off" : "on");
+      applyPrefs();
+      paint();
+      return;
+    }
     if (act === "update") {
       checkUpdate(false);
       return;
@@ -3229,6 +3702,35 @@
     if (act === "rollback") {
       openSheet(t("rollback"), [{ label: t("rollback"), value: "go" }, { label: t("cancel"), value: "no" }],
         undefined, function (i) { if (i === 0) nativeRollback(); }, t("rollbackConfirm"));
+      return;
+    }
+    if (act === "prices") {
+      backStack.push(view === "account" ? "account" : "main");
+      view = "prices";
+      paint();
+      return;
+    }
+    if (act === "price-edit") {
+      backStack.push("prices");
+      view = "price-edit";
+      paint();
+      return;
+    }
+    if (act === "price-save") {
+      var pr = readPrices();
+      var inputs = root.querySelectorAll("[data-price]");
+      for (var pi = 0; pi < inputs.length; pi++) {
+        var parts = inputs[pi].getAttribute("data-price").split("-");
+        var v = Number(inputs[pi].value);
+        if (!isNaN(v) && v >= 0 && pr.models[Number(parts[0])]) {
+          pr.models[Number(parts[0])][parts[1]][parts[2]] = v;
+        }
+      }
+      pr.updated = new Date().toISOString().slice(0, 10);
+      writePrices(pr);
+      toast(t("priceSaved"));
+      view = backStack.length ? backStack.pop() : "prices";
+      paint();
       return;
     }
     if (act === "check-balance") {
@@ -3252,9 +3754,42 @@
     if (act === "char-new") {
       backStack.push("characters");
       state.editId = null;
-      state.draft = { name: "", persona: "", greeting: "" };
+      state.draft = { name: "", persona: "", greeting: "", personality: "", avatar: "" };
       view = "character";
       paint();
+      return;
+    }
+    if (act === "char-avatar") {
+      if (!state.draft) state.draft = {};
+      pickAvatar(function (dataUrl) {
+        if (!state.draft) return;
+        state.draft.avatar = dataUrl;
+        var box = document.getElementById("sk-char-avatar-preview");
+        if (box) box.innerHTML = '<img class="sk-char-avatar-img" src="' + dataUrl + '" alt="">';
+      });
+      return;
+    }
+    if (act === "world-save") {
+      if (!state.draft || !state.draft.world) return;
+      var w = state.draft.world;
+      var nameInput = root.querySelector('[data-world-field="name"]');
+      var bgInput = root.querySelector('[data-world-field="background"]');
+      if (nameInput) w.name = nameInput.value.trim() || w.name;
+      if (bgInput) w.background = bgInput.value.trim();
+      var checked = root.querySelectorAll("[data-world-member]:checked");
+      w.memberIds = [];
+      for (var wi = 0; wi < checked.length; wi++) w.memberIds.push(checked[wi].getAttribute("data-world-member"));
+      // 主角色必须在场
+      if (state.editId && w.memberIds.indexOf(state.editId) < 0) w.memberIds.push(state.editId);
+      var worlds = readWorlds();
+      var replaced = false;
+      for (var wj = 0; wj < worlds.length; wj++) {
+        if (worlds[wj].id === w.id) { worlds[wj] = w; replaced = true; }
+      }
+      if (!replaced) worlds.push(w);
+      writeWorlds(worlds);
+      state.draft.world = JSON.parse(JSON.stringify(w));
+      toast(t("worldSaved"));
       return;
     }
     if (act === "char-open") {
@@ -3264,10 +3799,15 @@
       for (var ci = 0; ci < cList.length; ci++) {
         if (cList[ci].id === cid) {
           state.editId = cid;
+          var cw = ensureWorldForChar(cList[ci]);
+          writeChars(cList);
           state.draft = {
             name: cList[ci].name,
             persona: cList[ci].persona,
-            greeting: cList[ci].greeting
+            greeting: cList[ci].greeting,
+            personality: cList[ci].personality || "",
+            avatar: cList[ci].avatar || "",
+            world: cw ? JSON.parse(JSON.stringify(cw)) : null
           };
         }
       }
@@ -3287,8 +3827,10 @@
         for (var li = 0; li < list.length; li++) {
           if (list[li].id === state.editId) {
             list[li].name = name;
+            list[li].personality = (d.personality || "").trim();
             list[li].persona = (d.persona || "").trim();
             list[li].greeting = (d.greeting || "").trim();
+            list[li].avatar = d.avatar || "";
           }
         }
       } else {
@@ -3296,12 +3838,18 @@
         list.push({
           id: nid,
           name: name,
+          personality: (d.personality || "").trim(),
           persona: (d.persona || "").trim(),
           greeting: (d.greeting || "").trim(),
+          avatar: d.avatar || "",
           at: Date.now()
         });
         state.editId = nid;
       }
+      // 角色保存后确保其拥有默认世界书（群聊场景）
+      var savedChar = null;
+      for (var si = 0; si < list.length; si++) if (list[si].id === state.editId) savedChar = list[si];
+      ensureWorldForChar(savedChar);
       writeChars(list);
       toast(t("characterSaved"));
       backStack = ["data"];
