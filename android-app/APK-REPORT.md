@@ -1,4 +1,4 @@
-# APK 打包交付报告（chatbot 0.1.1 / V47）
+# APK 打包交付报告（chatbot 0.1.1 / V48）
 
 - 执行时间：2026-11-17 12:39（北京时间）
 - 产物路径：`android-app/android/app/build/outputs/apk/release/app-release.apk`（约 5.0 MB）
@@ -7,6 +7,7 @@
 - 启动行为：首次打开直接进入对话界面（v43）
 - 新增功能：**DSH 风格首次新手引导**（v44，见 1.4）
 - 最新功能：**自定义聊天背景**（v47，见 1.5）：预设渐变 / 相册图片 + 拖动缩放调整显示区域 + 遮罩浓度，深浅色自适应
+- 最新修复（v48，见 1.6）：气泡预览配色误伤容器、输入框显示所选角色名
 
 ## 1. APK 基本信息
 
@@ -14,10 +15,16 @@
 |---|---|
 | 包名 | com.chatbot.demo |
 | 应用名 | chatbot |
-| versionCode / versionName | 47 / 0.1.1 |
+| versionCode / versionName | 48 / 0.1.1 |
 | minSdk / targetSdk | 23（Android 6.0+）/ 34（规避 Android 15 强制 edge-to-edge） |
 | 签名 | chatbot-release.jks（alias: chatbot） |
 | 编译 SDK | 35 |
+
+## 1.6 清单修复项（v48）
+
+- **气泡预览配色异常**：`body[data-sk-bubble] [class*="bubble-"]` 会误匹配设置页自己的 `.sk-bubble-preview` 容器，导致选非默认色时整个预览区被染色、气泡"消失"。改为 `[class^="bubble-"]` 前缀匹配，只作用于真实聊天气泡（class 形如 `bubble-_4cfe7`）
+- **输入框显示所选角色**：新建对话选角色后写入 `chat-demo:active-char`（角色名），通过 MutationObserver 持续把角色标签注入输入框容器（React 重建不丢失）；取消角色则隐藏
+- 验证：`fixes-check.mjs` 6/6；全套 12 套回归全通过
 
 ## 1.5 自定义聊天背景（v47）
 

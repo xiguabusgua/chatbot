@@ -259,6 +259,7 @@
       pickCharacter: "选择角色开始对话",
       noCharacter: "不使用角色",
       picked: "本次对话使用「{n}」",
+      charInChat: "角色：{n}",
       pickedNone: "本次对话不使用角色",
       ctx: "上下文",
       ctxRole: "当前角色",
@@ -495,6 +496,7 @@
       pickCharacter: "Pick a character",
       noCharacter: "No character",
       picked: "Using 「{n}」 for this chat",
+      charInChat: "Character: {n}",
       pickedNone: "No character for this chat",
       ctx: "Context",
       ctxRole: "Character",
@@ -974,7 +976,7 @@
   /* ---------------- 新增：字号 / 个性化 / 关于页 ---------------- */
   var FS_STEPS = ["s", "m", "l", "xl"];
   var FS_LABEL = { s: "fsSmall", m: "fsNormal", l: "fsLarge", xl: "fsXL" };
-  var APP_VERSION = { version: "0.1.1", build: "V47" };
+  var APP_VERSION = { version: "0.1.1", build: "V48" };
 
   /* 应用内更新：manifest 清单地址（json: {versionName,versionCode,apkUrl,notes}）。
      部署到你的服务器后改这里；也可在设备上用 localStorage["chat-demo:update-url"] 覆盖 */
@@ -1329,6 +1331,30 @@
     if (open) renderCtx();
   }
 
+  /* 输入框角色标签：把当前对话角色显示在输入框上方，随 React 重建持续刷新 */
+  var CHAR_BADGE_ID = "sk-char-badge";
+  function refreshCharBadge() {
+    var raw = read("chat-demo:active-char", "");
+    var name = "";
+    try { var o = JSON.parse(raw); name = (o && o.name) ? String(o.name) : ""; } catch (e) {}
+    var wrappers = document.querySelectorAll(".wrapper-ed6f47, .textareaWrapper-ed6f47");
+    if (!wrappers.length) return;
+    var wrap = wrappers[0];
+    var badge = document.getElementById(CHAR_BADGE_ID);
+    if (!name) {
+      if (badge && badge.parentNode) badge.parentNode.removeChild(badge);
+      return;
+    }
+    if (!badge) {
+      badge = document.createElement("div");
+      badge.id = CHAR_BADGE_ID;
+      badge.className = "sk-char-badge";
+      wrap.insertBefore(badge, wrap.firstChild);
+    }
+    var label = t("charInChat").replace("{n}", name);
+    if (badge.textContent !== label) badge.textContent = label;
+  }
+
   function buildCtx() {
     if (ctxPanel) return;
     ctxBtn = document.createElement("button");
@@ -1396,9 +1422,15 @@
       if (p) {
         var id = p.getAttribute("data-pick") || "";
         write("chat-demo:char-pending", id || "__none__");
-        closePicker();
         var nm = charById(id);
+        // 当前对话角色：写入显示名，供输入框角色标签展示
+        if (id && nm) write("chat-demo:active-char", JSON.stringify({ id: id, name: nm.name }));
+        else {
+          try { localStorage.removeItem("chat-demo:active-char"); } catch (e) {}
+        }
+        closePicker();
         toast(id && nm ? t("picked").replace("{n}", nm.name) : t("pickedNone"));
+        refreshCharBadge();
         if (trigger) {
           window.__skBypassNew = true;
           trigger.click();
@@ -2776,6 +2808,7 @@
   function check() {
     if (busy) return;
     if (obEl) return; // 引导层接管期间不处理设置页
+    refreshCharBadge();
     if (Date.now() < suppressSettingsUntil) return;
     liftModals();
     if (!onboardDone() && !userInteracted) {

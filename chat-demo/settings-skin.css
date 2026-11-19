@@ -616,12 +616,12 @@ body[data-sk-fs] [class*="ds-markdown"] pre {
   font-size: calc(var(--sk-chat-fs) - 3px) !important;
 }
 
-body[data-sk-fs] [class*="bubble-"] {
+body[data-sk-fs] [class^="bubble-"] {
   font-size: var(--sk-chat-fs) !important;
   line-height: calc(var(--sk-chat-lh) - 4px) !important;
 }
 
-body[data-sk-density="compact"] [class*="bubble-"] {
+body[data-sk-density="compact"] [class^="bubble-"] {
   padding-top: 7px;
   padding-bottom: 7px;
 }
@@ -702,15 +702,15 @@ body[data-sk-radius="square"] {
 }
 
 /* 应用到应用内的用户消息气泡 */
-body[data-sk-bubble] [class*="bubble-"] {
+body[data-sk-bubble] [class^="bubble-"] {
   background-color: var(--sk-bubble-bg);
 }
 
-body[data-sk-radius] [class*="bubble-"] {
+body[data-sk-radius] [class^="bubble-"] {
   border-radius: var(--sk-bubble-r);
 }
 
-body[data-sk-width="wide"] [class*="bubble-"] {
+body[data-sk-width="wide"] [class^="bubble-"] {
   max-width: calc(100% - 24px);
 }
 
@@ -1667,3 +1667,26 @@ body[data-sk-chatbg] .frame-_9fdf5 {
 }
 #sk-settings .sk-adjust-page .sk-bg-actions { flex-wrap: wrap; }
 #sk-settings .sk-adjust-page .sk-bg-actions .sk-btn { flex: 1 1 44%; }
+
+/* ==================== 输入框当前角色标签 ==================== */
+#sk-char-badge {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  margin: 0 0 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--sk-accent-bg, rgba(77, 107, 254, 0.1));
+  color: var(--sk-accent-fg, #3b5bdb);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+html[data-ds-dark-theme] #sk-char-badge,
+body[data-ds-dark-theme] #sk-char-badge {
+  --sk-accent-bg: rgba(120, 145, 255, 0.16);
+  --sk-accent-fg: #a9bcff;
+}
