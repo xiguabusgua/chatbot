@@ -1,4 +1,4 @@
-# APK 打包交付报告（chatbot 0.1.1 / V51）
+# APK 打包交付报告（chatbot 0.1.1 / V52）
 
 - 执行时间：2026-11-17 12:39（北京时间）
 - 产物路径：`android-app/android/app/build/outputs/apk/release/app-release.apk`（约 5.0 MB）
@@ -15,10 +15,23 @@
 |---|---|
 | 包名 | com.chatbot.demo |
 | 应用名 | chatbot |
-| versionCode / versionName | 51 / 0.1.1 |
+| versionCode / versionName | 52 / 0.1.1 |
 | minSdk / targetSdk | 23（Android 6.0+）/ 34（规避 Android 15 强制 edge-to-edge） |
 | 签名 | chatbot-release.jks（alias: chatbot） |
 | 编译 SDK | 35 |
+
+## 1.9 微信风格界面按真实微信截图精修（v52）
+
+用户提供真实微信会话列表截图作为视觉参考，按图重做：
+
+- **数据来源**：从原应用 IndexedDB `chat-demo` 的 `sessionSummaries` / `sessions` 读取真实会话标题、更新时间、最后一条消息，不再显示占位的"新对话"
+- **会话项**：白底、48px 方形圆角彩色图标头像、名称 + 时间 + 消息预览三行结构；时间按微信口径格式化（今天 HH:MM / 昨天 / 周X / M月D日）；分隔线从文字区开始，不穿过头像
+- **顶栏**：「微信」居中 + 搜索（可展开输入框按名称过滤会话）+ 圆圈加号（触发开启新对话）
+- **底部 4 Tab**：微信（绿色实心气泡）/ 通讯录 → 角色卡列表 / 发现 → 设置 / 我 → 账户页，均有实际功能
+- **全屏**：移动端侧栏宽度占满屏幕，隐藏原应用的分组标题、新建按钮、设置入口与悬浮上下文按钮，视觉上是完整微信主界面
+- **可回退**：关闭开关时清理所有注入 DOM，恢复原界面与原生会话项
+- 深浅色主题均适配
+- 验证：`wechat-check.mjs` 18/18；全套 16 套回归 178 项全通过
 
 ## 1.8 世界书与微信风格界面（v51）
 

@@ -1222,7 +1222,7 @@
   /* ---------------- 新增：字号 / 个性化 / 关于页 ---------------- */
   var FS_STEPS = ["s", "m", "l", "xl"];
   var FS_LABEL = { s: "fsSmall", m: "fsNormal", l: "fsLarge", xl: "fsXL" };
-  var APP_VERSION = { version: "0.1.1", build: "V51" };
+  var APP_VERSION = { version: "0.1.1", build: "V52" };
 
   /* 应用内更新：manifest 清单地址（json: {versionName,versionCode,apkUrl,notes}）。
      部署到你的服务器后改这里；也可在设备上用 localStorage["chat-demo:update-url"] 覆盖 */
@@ -3250,21 +3250,269 @@
     } else if (act === "finish") closeOnboarding(true);
   }, true);
 
-  /* 微信风格：给会话列表项注入头像（React 重建后由 check 每次补齐） */
-  function applyWechatList() {
-    if (!readWechat()) return;
-    var c = activeChar();
-    var av = c && c.avatar
-      ? '<img src="' + c.avatar + '" alt="">'
-      : '<span>' + escapeHtml(c ? (c.name || "聊").slice(0, 1) : "聊") + "</span>";
+  /* ---------------- 微信风格界面（参照微信会话列表） ----------------
+     从原应用 IndexedDB 读会话的真实标题/时间/最后一条消息，重建三行结构；
+     注入顶栏与底部 Tab。React 重建 DOM 后由 check() 补齐。 */
+  var wxSessions = [];
+  var wxLastLoad = 0;
+  var wxLoading = false;
+  var wxPalette = ["#7a8fa6", "#4a90d9", "#07c160", "#8e5bb7", "#e8a33d", "#409eff", "#f0803c", "#2aae67"];
+  /* 每个会话一个白色几何图形，贴近微信里各种服务号/公众号的彩色图标 */
+  var wxGlyphs = [
+    '<circle cx="12" cy="12" r="5"/>',
+    '<path d="M5 6h6v12H5zM13 6h6v12h-6z"/>',
+    '<path d="M4 12l5 5L20 6"/>',
+    '<circle cx="12" cy="12" r="7"/><path d="M12 5v14M5 12h14"/>',
+    '<path d="M12 3l9 9-9 9-9-9z"/>',
+    '<path d="M4 9h16v6H4zM8 15v3h8v-3"/>',
+    '<path d="M4 10h4l8-4v12l-8-4H4z"/>',
+    '<circle cx="9" cy="10" r="4"/><circle cx="16" cy="14" r="4"/>'
+  ];
+  function wxGlyph(i) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+      wxGlyphs[i % wxGlyphs.length] + "</svg>";
+  }
+  var wxTab = "chat";
+
+  function wxTime(ts) {
+    var d = new Date(ts), now = new Date();
+    var d0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    var t0 = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+    var diff = d0 - t0;
+    if (diff <= 0) return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+    if (diff <= 86400000) return "昨天";
+    if (diff < 7 * 86400000) return "周" + "日一二三四五六".charAt(d.getDay());
+    return (d.getMonth() + 1) + "月" + d.getDate() + "日";
+  }
+
+  function msgText(m) {
+    if (!m) return "";
+    if (typeof m.content === "string") return m.content;
+    if (Array.isArray(m.content)) {
+      for (var i = 0; i < m.content.length; i++) if (m.content[i] && m.content[i].text) return m.content[i].text;
+    }
+    if (Array.isArray(m.blocks)) {
+      var s = "";
+      for (var j = 0; j < m.blocks.length; j++) if (m.blocks[j] && m.blocks[j].text) s += m.blocks[j].text;
+      return s;
+    }
+    return "";
+  }
+
+  function loadWxSessions() {
+    if (wxLoading) return;
+    wxLoading = true;
+    wxLastLoad = Date.now();
+    var done = function () { wxLoading = false; };
+    try {
+      var req = indexedDB.open("chat-demo");
+      req.onerror = function () { done(); };
+      req.onsuccess = function () {
+        var db = req.result;
+        if (!db.objectStoreNames.contains("sessionSummaries")) { done(); return; }
+        try {
+          var tx = db.transaction(["sessionSummaries", "sessions"], "readonly");
+          var g1 = tx.objectStore("sessionSummaries").getAll();
+          var g2 = tx.objectStore("sessions").getAll();
+          tx.oncomplete = function () {
+            var sums = g1.result || [], sess = g2.result || [];
+            var byId = {};
+            for (var i = 0; i < sess.length; i++) byId[sess[i].id] = sess[i];
+            var list = sums.map(function (x) {
+              var s = byId[x.id], msgs = (s && s.messages) || [];
+              var name = (x.title || "").trim();
+              if (!name) {
+                for (var k = 0; k < msgs.length; k++) {
+                  if (msgs[k].role === "user") { name = msgText(msgs[k]); break; }
+                }
+              }
+              var last = msgs.length ? msgs[msgs.length - 1] : null;
+              var hasReply = false;
+              for (var q = 0; q < msgs.length; q++) if (msgs[q].role === "assistant") hasReply = true;
+              var preview = msgs.length ? msgText(last) : "";
+              return {
+                id: x.id,
+                name: name || "新对话",
+                preview: hasReply ? (preview || "新对话") : "",
+                draft: msgs.length > 0 && !hasReply,
+                at: x.updatedAt || x.createdAt || 0
+              };
+            });
+            list.sort(function (a, b) { return b.at - a.at; });
+            wxSessions = list;
+            done();
+          };
+          tx.onerror = function () { done(); };
+          tx.onabort = function () { done(); };
+        } catch (e) { done(); }
+      };
+    } catch (e) { done(); }
+  }
+
+  function wxIcon(kind) {
+    var p = {
+      search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+      plus: '<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>',
+      chat: '<path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1z"/>',
+      contact: '<circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5"/><path d="M18 8v6M15 11h6"/>',
+      discover: '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+      me: '<circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.8 3.1-6.5 7-6.5s7 2.7 7 6.5"/>'
+    };
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + p[kind] + "</svg>";
+  }
+
+  function wxBuildChrome() {
+    var sider = document.querySelector(".sider-ac14ac");
+    if (!sider) return;
+    if (!document.getElementById("sk-wx-header")) {
+      var h = document.createElement("div");
+      h.id = "sk-wx-header";
+      h.innerHTML = "微信" +
+        '<div class="sk-wx-tools">' +
+        '<button type="button" data-wx="search" aria-label="搜索">' + wxIcon("search") + "</button>" +
+        '<button type="button" data-wx="new" aria-label="发起群聊">' + wxIcon("plus") + "</button>" +
+        "</div>";
+      sider.insertBefore(h, sider.firstChild);
+    }
+    if (!document.getElementById("sk-wx-tabbar")) {
+      var t = document.createElement("div");
+      t.id = "sk-wx-tabbar";
+      var tabs = [["chat", "微信", "chat"], ["contact", "通讯录", "contact"], ["discover", "发现", "discover"], ["me", "我", "me"]];
+      t.innerHTML = tabs.map(function (x) {
+        return '<button type="button" class="sk-wx-tab' + (wxTab === x[0] ? " is-on" : "") +
+          '" data-wx-tab="' + x[0] + '">' + wxIcon(x[2]) + "<span>" + x[1] + "</span></button>";
+      }).join("");
+      sider.appendChild(t);
+      t.addEventListener("click", function (e) {
+        var b = e.target.closest("[data-wx-tab]");
+        if (b) wxOnTab(b.getAttribute("data-wx-tab"));
+      });
+    }
+    var hdr = document.getElementById("sk-wx-header");
+    if (hdr && !hdr.dataset.bound) {
+      hdr.dataset.bound = "1";
+      hdr.addEventListener("click", function (e) {
+        var b = e.target.closest("[data-wx]");
+        if (!b) return;
+        if (b.getAttribute("data-wx") === "new") {
+          var nc = document.querySelector(".sider-ac14ac .newChat-ac14ac");
+          if (nc) nc.click();
+        } else if (b.getAttribute("data-wx") === "search") {
+          wxToggleSearch();
+        }
+      });
+    }
+  }
+
+  function wxToggleSearch() {
+    var box = document.getElementById("sk-wx-search");
+    if (box) {
+      box.parentNode.removeChild(box);
+      wxApplyFilter("");
+      return;
+    }
+    var sider = document.querySelector(".sider-ac14ac");
+    if (!sider) return;
+    box = document.createElement("div");
+    box.id = "sk-wx-search";
+    box.innerHTML = '<input type="search" placeholder="搜索" aria-label="搜索会话">';
+    var hdr = document.getElementById("sk-wx-header");
+    sider.insertBefore(box, hdr ? hdr.nextSibling : sider.firstChild);
+    var inp = box.querySelector("input");
+    inp.addEventListener("input", function () { wxApplyFilter(inp.value.trim()); });
+    inp.focus();
+  }
+
+  function wxApplyFilter(q) {
     var items = document.querySelectorAll(".list-ac14ac .item-ff6fc9");
     for (var i = 0; i < items.length; i++) {
-      if (items[i].querySelector(".sk-wx-avatar")) continue;
-      var a = document.createElement("span");
-      a.className = "sk-wx-avatar";
-      a.innerHTML = av;
-      items[i].insertBefore(a, items[i].firstChild);
+      var nm = items[i].querySelector(".sk-wx-name");
+      var txt = nm ? nm.textContent : "";
+      items[i].style.display = !q || txt.indexOf(q) > -1 ? "" : "none";
     }
+  }
+
+  function wxOpenSettings(path, tries) {
+    tries = tries || 0;
+    if (tries > 20) return;
+    var panel = document.getElementById("sk-settings");
+    if (!panel) {
+      var btn = document.querySelector(".sider-ac14ac .settings-ac14ac");
+      if (btn) btn.click();
+      setTimeout(function () { wxOpenSettings(path, tries + 1); }, 120);
+      return;
+    }
+    var el = panel.querySelector('[data-act="' + path[0] + '"]');
+    if (!el) {
+      setTimeout(function () { wxOpenSettings(path, tries + 1); }, 120);
+      return;
+    }
+    el.click();
+    if (path.length > 1) setTimeout(function () { wxOpenSettings(path.slice(1), 0); }, 180);
+  }
+
+  function wxOnTab(k) {
+    wxTab = k;
+    var tabs = document.querySelectorAll("#sk-wx-tabbar .sk-wx-tab");
+    for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle("is-on", tabs[i].getAttribute("data-wx-tab") === k);
+    if (k === "contact") wxOpenSettings(["data", "characters"]);
+    else if (k === "discover") wxOpenSettings([]);
+    else if (k === "me") wxOpenSettings(["account"]);
+    else {
+      var panel = document.getElementById("sk-settings");
+      if (panel) { var cl = panel.querySelector('[data-act="close"]'); if (cl) cl.click(); }
+    }
+  }
+
+  function clearWechat() {
+    ["sk-wx-header", "sk-wx-tabbar", "sk-wx-search"].forEach(function (id) {
+      var e = document.getElementById(id);
+      if (e && e.parentNode) e.parentNode.removeChild(e);
+    });
+    var built = document.querySelectorAll(".list-ac14ac .item-ff6fc9 .sk-wx-built");
+    for (var i = 0; i < built.length; i++) built[i].parentNode.removeChild(built[i]);
+    var items = document.querySelectorAll(".list-ac14ac .item-ff6fc9");
+    for (var j = 0; j < items.length; j++) {
+      items[j].removeAttribute("data-wx-ver");
+      items[j].style.display = "";
+    }
+  }
+
+  function applyWechatList() {
+    if (!readWechat()) { clearWechat(); return; }
+    wxBuildChrome();
+    if (Date.now() - wxLastLoad > 2500) loadWxSessions();
+    var items = document.querySelectorAll(".list-ac14ac .item-ff6fc9");
+    if (!items.length) return;
+    var c = activeChar();
+    var ver = wxSessions.length + ":" + (wxSessions[0] ? wxSessions[0].at : 0);
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      if (it.getAttribute("data-wx-ver") === ver && it.querySelector(".sk-wx-name")) continue;
+      var d = wxSessions[i] || { name: "新对话", preview: "", at: Date.now(), draft: false };
+      var color = wxPalette[i % wxPalette.length];
+      var av = (i === 0 && c && c.avatar)
+        ? '<img src="' + c.avatar + '" alt="">'
+        : wxGlyph(i);
+      var dot = d.draft ? '<span class="sk-wx-dot"></span>' : "";
+      var prev = d.draft ? "[草稿]" : (d.preview || "");
+      var built =
+        '<span class="sk-wx-avatar" style="background:' + color + '">' + av + dot + "</span>" +
+        '<div class="sk-wx-row"><span class="sk-wx-name">' + escapeHtml(d.name) + "</span>" +
+        '<span class="sk-wx-time">' + (d.at ? wxTime(d.at) : "") + "</span></div>" +
+        '<div class="sk-wx-preview' + (d.draft ? " is-draft" : "") + '">' + escapeHtml(prev) + "</div>";
+      // 保留原应用的标题/动作节点（隐藏），只追加微信结构
+      var holder = it.querySelector(".sk-wx-built");
+      if (!holder) {
+        holder = document.createElement("div");
+        holder.className = "sk-wx-built";
+        it.appendChild(holder);
+      }
+      holder.innerHTML = built;
+      it.setAttribute("data-wx-ver", ver);
+    }
+    var q = document.querySelector("#sk-wx-search input");
+    if (q && q.value) wxApplyFilter(q.value.trim());
   }
 
   function check() {
